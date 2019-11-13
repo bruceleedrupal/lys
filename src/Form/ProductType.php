@@ -6,14 +6,24 @@ use App\Entity\Product;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class ProductType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+
             ->add('title')
-            ->add('price')          
+            ->add('price',NumberType::class,[
+                'html5'=>true,
+                'attr'=>[
+                    'step'=>0.01
+                ]
+                
+            ])    
+       
         ;
     }
 

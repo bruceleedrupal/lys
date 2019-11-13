@@ -1,14 +1,21 @@
+{% import 'macros.html.twig' as macros %}
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
         {% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    <body class='container'>
+       {% block navbar %}
+        {{ render(controller('App\\Controller\\CartController::cartBlock')) }}
+        {% endblock %}
+        
+        {% block body %}        
+        {% endblock %}
         {% block javascripts %}
         <script src="{{ asset('build/js/app.js') }}"></script>
         {% endblock %}
