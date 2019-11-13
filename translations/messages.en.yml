@@ -13,6 +13,7 @@ db:
         name: Name
         image: Image
         price: Price
+        priceTotal: PriceTotal
 
 app:
     head:
@@ -23,7 +24,7 @@ app:
         remove: Remove
         actions: Actions
         currencyCode: PLN
-        currencyDescription: zł
+        currencyDescription: zł        
     home:
         title: Products list
         table:

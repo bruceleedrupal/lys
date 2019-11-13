@@ -60,6 +60,15 @@ class CartController extends AbstractController
         ]);        
     }
     
+    public function cartSummaryBlock(OrderFactory $order): Response
+    {
+        $order = $order->getCurrent();
+        
+        return $this->render('cart/_cart_summary_block.html.twig', [
+            'order' => $order
+        ]);
+    }
+    
     /**
      * @Route("/addItem/{id}", name="cart.addItem", methods={"POST"})
      */

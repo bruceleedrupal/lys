@@ -1,0 +1,41 @@
+<table class="table table-bordered text-center">
+                    <thead>
+                    <tr>
+                        <th>{{ 'app.cart.table.column.product'|trans }}</th>     
+                        <th>{{ 'db.product.price'|trans }}</th>                
+                        <th>{{ 'app.cart.table.column.quantity'|trans }}</th>                        
+                        <th>{{ 'db.product.priceTotal'|trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in order.orderItem %}
+                        <tr>
+                            <td class='text-left'>{{ item.product.title }}</td>                    
+                            <td>
+                                {{ item.price }}
+                            </td>
+                            <td>
+                                {{ item.quantity }}
+                            </td>
+                            
+                            <td>
+                                {{ item.priceTotal}}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                  </tbody>
+                  <tfoot>
+                       <tr>
+                            <td colspan='2' class='text-left'>总计<span class="badge badge-warning">{{ order.itemsSingle }}</span></td>                         
+
+                           
+                            <td>
+                                {{ order.itemsTotal}}
+                            </td>
+                             <td>
+                                {{ order.priceTotal}}
+                            </td>
+                        </tr>
+                       
+                  </tfoot>
+</table>
