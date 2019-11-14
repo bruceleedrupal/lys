@@ -2,24 +2,38 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
+        <meta charset="UTF-8">        
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
+     
         {% endblock %}
     </head>
-    <body class='container'>
+    <body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
        {% block navbar %}
-        {{ render(controller('App\\Controller\\CartController::cartBlock')) }}
-        {{ render(controller('App\\Controller\\CartController::cartSummaryBlock')) }}
+       {%  include '_layout/_navbar.html.twig' %}
         
         {% endblock %}
         
+        
+        <div class="content-wrapper">
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        </aside>
+        
+        <section class='content'>
         {% block body %}        
         {% endblock %}
+        </section>
+        </div>
+        
+        
+     </div>
         {% block javascripts %}
+        <script src="{{ asset('build/runtime.js') }}"></script>
         <script src="{{ asset('build/js/app.js') }}"></script>
         {% endblock %}
+      
     </body>
 </html>

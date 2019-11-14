@@ -27,5 +27,17 @@ jQuery.fn.clickToggle = function(a, b) {
 */
 
 $(document).ready(function(){ 
+     var reference = $('#cart');
+     var popover = $('#cart-summary');
+
+     reference.clickToggle(function(){
+         var popper = new Popper(reference, popover, {
+            placement: 'bottom-end',
+        });
+         popover.removeClass('d-none');
+     },function(){
+         popover.addClass('d-none');
+     });
+
 });
 

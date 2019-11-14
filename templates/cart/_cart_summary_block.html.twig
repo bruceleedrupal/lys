@@ -1,5 +1,7 @@
-<table class="table table-bordered text-center">
-                    <thead>
+{% if order.id  %}
+<div  id='cart-summary'>
+<table class="table table-bordered text-center mb-0"  >
+        <thead>
                     <tr>
                         <th>{{ 'app.cart.table.column.product'|trans }}</th>     
                         <th>{{ 'db.product.price'|trans }}</th>                
@@ -10,7 +12,7 @@
                     <tbody>
                     {% for item in order.orderItem %}
                         <tr>
-                            <td class='text-left'>{{ item.product.title }}</td>                    
+                            <td class='text-left product-title'>{{ item.product.title }}</td>                    
                             <td>
                                 {{ item.price }}
                             </td>
@@ -37,5 +39,7 @@
                             </td>
                         </tr>
                        
-                  </tfoot>
+       </tfoot>
 </table>
+</div>
+{% endif %}

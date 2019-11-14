@@ -10,9 +10,7 @@
             <tr>
                 <th>Id</th>
                 <th>Title</th>
-                <th>Price</th>
-                <th>Created</th>
-                <th>Updated</th>
+                <th>Price</th>               
                 <th>actions</th>
                 <th>cart</th>
             </tr>
@@ -22,9 +20,7 @@
             <tr>
                 <td>{{ product.id }}</td>
                 <td>{{ product.title }}</td>
-                <td>{{ product.price }}</td>
-                <td>{{ product.created ? product.created|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ product.updated ? product.updated|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ product.price }}</td>               
                 <td>
                     <a href="{{ path('product_show', {'id': product.id}) }}">show</a>
                     <a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>

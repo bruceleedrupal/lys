@@ -16,8 +16,10 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "admin-lte": "^3.0.0",
         "bootstrap": "^4.3.1",
         "font-awesome": "^4.7.0",
-        "jquery": "^3.4.1"
+        "jquery": "^3.4.1",
+        "popper.js": "^1.16.0"
     }
 }

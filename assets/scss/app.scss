@@ -1,8 +1,17 @@
-@import "~bootstrap/scss/bootstrap";
+@import "~admin-lte/build/scss/AdminLTE";
 
 
 $fa-font-path: "~font-awesome/fonts";
 @import '~font-awesome/css/font-awesome';
 
-body {
+#cart {
+ cursor:pointer;
+}
+#cart-summary{
+ background-color:#FFF8DC;
+  white-space: nowrap;
+ .product-title { 
+   white-space:normal;
+   min-width:150px;
+ }
 }
