@@ -36,7 +36,8 @@ class AddItemType extends AbstractType
             [
                 'label' => 'app.cart.addItem.button',
                 'attr' => [
-                    'icon' => 'fa fa-cart-plus'
+                    'icon' => 'fa fa-plus-square',
+                    'class'=>'btn-secondary btn-sm'
                 ]
             ]
         );

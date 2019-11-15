@@ -12,16 +12,19 @@ db:
     product:
         name: Name
         image: Image
+        gongshi: 工时
         price: 单价
         priceTotal: 小计
+        create: 增加新工序
 
 app:
     head:
         title: Cart
     default:
         cart: Cart
+        gongdan: 工单
         summary: Summary
-        remove: Remove
+        remove: 删除
         actions: Actions
         currencyCode: PLN
         currencyDescription: zł        
@@ -32,7 +35,7 @@ app:
                 product: Product
                 price: Price
     cart:
-        title: Cart
+        title: 工单结算
         table:
             column:
                 product: 产品
@@ -42,22 +45,22 @@ app:
                 summaryWithDiscount: Summary price with discount
                 toPay: To pay
         setItemQuantity:
-            button: Change
+            button: 更新
             message:
                 success: The product quantity has been changed
                 failed: There were problems with changing the item quantity
         addItem:
-            button: Add to cart
+            button: 添加
             message:
                 success: The product has been added to shopping cart
                 failed: There was a problem with adding the product to the cart
         removeItem:
-            button: Remove
+            button: 删除
             message:
                 success: The product has been removed from shopping cart
                 failed: There was a problem with removing the product from the cart
         clear:
-            button: Clear the cart
+            button: 清空工单
             message:
                 success: The cart is now empty
                 failed: There was a problem with clearing the cart

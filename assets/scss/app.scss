@@ -3,6 +3,9 @@
 
 $fa-font-path: "~font-awesome/fonts";
 @import '~font-awesome/css/font-awesome';
+html {
+ font-size:14px;
+}
 
 #cart {
  cursor:pointer;
@@ -12,6 +15,12 @@ $fa-font-path: "~font-awesome/fonts";
   white-space: nowrap;
  .product-title { 
    white-space:normal;
-   min-width:150px;
+   min-width:170px;
+   @include media-breakpoint-up(md) {
+     white-space: nowrap;   
+   }
  }
+}
+.cart-empty {
+  padding:0.5em 1em;
 }

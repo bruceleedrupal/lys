@@ -8,8 +8,8 @@
             <tr>
                 <th>名称</th>
                 <th>{{ 'db.product.gongshi'|trans }}</th>               
-                <th  class="d-none d-sm-table-cell">操作</th>
-                <th class='text-center'>添加</th>
+                <th>操作</th>
+                <th>添加</th>
             </tr>
         </thead>
         <tbody>
@@ -17,11 +17,11 @@
             <tr>               
                 <td>{{ product.title }}</td>
                 <td>{{ product.price }}</td>               
-                <td class="d-none d-sm-table-cell">
+                <td>
                     <a href="{{ path('product_show', {'id': product.id}) }}" class="btn btn-sm btn-default"><i class="fa fa-eye mr-1"></i>展示</a>
                     <a href="{{ path('product_edit', {'id': product.id}) }}" class="btn btn-sm btn-secondary"><i class="fa fa-edit  mr-1" aria-hidden="true"></i>编辑</a>
                 </td>
-               <td class='text-center'>
+               <td>
                   {{ render(controller('App\\Controller\\CartController::addItemForm', {'id' : product.id})) }}
                </td>
             </tr>
@@ -33,5 +33,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('product_new') }}" class='btn btn-success'>{{ 'db.product.create'|trans }}</a>
+    <a href="{{ path('product_new') }}">Create new</a>
 {% endblock %}

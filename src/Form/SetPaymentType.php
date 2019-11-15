@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Form;
 
-use App\Component\Order\Model\Order;
-use App\Component\Payment\Model\Payment;
+use App\Entity\Order;
+use App\Entity\Payment;
 use App\Component\Payment\Model\PaymentInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;

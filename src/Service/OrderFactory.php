@@ -162,7 +162,7 @@ class OrderFactory
      */
     public function items(): Collection
     {
-        return $this->order->getItems();
+        return $this->order->getOrderItem();
     }
 
     /**

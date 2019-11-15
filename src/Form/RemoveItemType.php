@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form;
 
-use App\Component\Order\Model\OrderItem;
+use App\Entity\OrderItem;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -40,6 +40,7 @@ class RemoveItemType extends AbstractType
                 'label' => 'app.cart.removeItem.button',
                 'attr' => [
                     'icon' => 'fa fa-minus-circle',
+                    'class'=>'btn-warning'
                 ]
             ]
         );

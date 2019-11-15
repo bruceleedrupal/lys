@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form;
 
-use App\Component\Order\Model\Order;
+use App\Entity\Order;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -37,7 +37,11 @@ class ClearCartType extends AbstractType
             'submit',
             SubmitType::class,
             [
-                'label' => 'app.cart.clear.button'
+                'label' => 'app.cart.clear.button',                
+                'attr'=>[           
+                    'icon' => 'fa fa-trash',
+                    'class'=>'btn-warning'
+                ]
             ]
         );
     }

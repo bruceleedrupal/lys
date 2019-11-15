@@ -1,10 +1,10 @@
-{% if order.id  %}
 <div  id='cart-summary'>
+{% if order.id  %}
 <table class="table table-bordered text-center mb-0"  >
         <thead>
                     <tr>
                         <th>{{ 'app.cart.table.column.product'|trans }}</th>     
-                        <th>{{ 'db.product.price'|trans }}</th>                
+                        <th>{{ 'db.product.gongshi'|trans }}</th>                
                         <th>{{ 'app.cart.table.column.quantity'|trans }}</th>                        
                         <th>{{ 'db.product.priceTotal'|trans }}</th>
                     </tr>
@@ -38,8 +38,16 @@
                                 {{ order.priceTotal}}
                             </td>
                         </tr>
+                        
+                        <tr>                            
+                             <td colspan='4'>
+                                <a href="{{ path('cart') }}" class='btn btn-success btn-block'>生成清单</a>
+                            </td>
+                        </tr>
                        
        </tfoot>
 </table>
+
+{% else %}
+<div class='cart-empty'>没有添加工序</div>{% endif %}
 </div>
-{% endif %}

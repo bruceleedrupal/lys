@@ -27,5 +27,8 @@ jQuery.fn.clickToggle = function(a, b) {
 */
 
 $(document).ready(function(){ 
+  $('#cart-summary').click(function(e){
+    e.stopPropagation();
+  });
 });
 
