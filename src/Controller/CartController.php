@@ -100,7 +100,7 @@ class CartController extends AbstractController
         
         if ($form->isSubmitted() && $form->isValid()) {
             $this->orderFactory->addItem($product, 1);
-            $this->addFlash('success', $this->translator->trans('app.cart.addItem.message.success'));
+            $this->addFlash('info', $this->translator->trans('app.cart.addItem.message.success',['%title%'=>$product->getTitle()]));
         }
         
         return $this->redirect($request->headers->get('referer'));;
@@ -135,10 +135,10 @@ class CartController extends AbstractController
         
         if ($form->isSubmitted() && $form->isValid()) {
             $this->orderFactory->clear();
-            $this->addFlash('success', $this->translator->trans('app.cart.clear.message.success'));
+         //   $this->addFlash('success', $this->translator->trans('app.cart.clear.message.success'));
         }
         
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('product_index');
     }
     
     
@@ -155,7 +155,7 @@ class CartController extends AbstractController
         
         if ($form->isSubmitted() && $form->isValid()) {
             $this->orderFactory->setItemQuantity($item, $form->getData()->getQuantity());
-            $this->addFlash('success', $this->translator->trans('app.cart.setItemQuantity.message.success'));
+            $this->addFlash('info', $this->translator->trans('app.cart.setItemQuantity.message.success',['%title%'=>$item->getProduct()->getTitle(),'%quantity%'=>$item->getQuantity()]));
         }
         
         return $this->redirectToRoute('cart');
@@ -170,7 +170,7 @@ class CartController extends AbstractController
         $form->handleRequest($request);        
         if ($form->isSubmitted() && $form->isValid()) {
             $this->orderFactory->removeItem($item);
-            $this->addFlash('success', $this->translator->trans('app.cart.removeItem.message.success'));
+            $this->addFlash('info', $this->translator->trans('app.cart.removeItem.message.success',['%title%'=>$item->getProduct()->getTitle()]));
         }
         
         return $this->redirectToRoute('cart');

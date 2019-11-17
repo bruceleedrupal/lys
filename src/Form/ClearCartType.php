@@ -28,10 +28,7 @@ class ClearCartType extends AbstractType
     {
         $builder->setAction($this->urlGenerator->generate('cart.clear'));
 
-        $builder->add(
-            'id',
-            HiddenType::class
-        );
+  
 
         $builder->add(
             'submit',
@@ -40,7 +37,7 @@ class ClearCartType extends AbstractType
                 'label' => 'app.cart.clear.button',                
                 'attr'=>[           
                     'icon' => 'fa fa-trash',
-                    'class'=>'btn-warning'
+                    'class'=>'btn-warning'                    
                 ]
             ]
         );
@@ -50,6 +47,9 @@ class ClearCartType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => Order::class,
+            'attr'=>[
+                'onsubmit'=>'return confirm("Are you sure you want to delete this item?")'
+            ]
         ));
     }
 }
