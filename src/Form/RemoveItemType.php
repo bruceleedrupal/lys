@@ -28,10 +28,7 @@ class RemoveItemType extends AbstractType
     {
         $builder->setAction($this->urlGenerator->generate('cart.removeItem', ['id' => $builder->getData()->getId()]));
 
-        $builder->add(
-            'id',
-            HiddenType::class
-        );
+      
 
         $builder->add(
             'submit',

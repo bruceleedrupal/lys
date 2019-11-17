@@ -47,17 +47,17 @@ app:
         setItemQuantity:
             button: 更新
             message:
-                success: The product quantity has been changed
+                success: 数量已更新
                 failed: There were problems with changing the item quantity
         addItem:
             button: 添加
             message:
-                success: The product has been added to shopping cart
+                success: 产品已添加
                 failed: There was a problem with adding the product to the cart
         removeItem:
             button: 删除
             message:
-                success: The product has been removed from shopping cart
+                success: 相关产品已删除
                 failed: There was a problem with removing the product from the cart
         clear:
             button: 清空工单

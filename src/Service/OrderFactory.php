@@ -143,10 +143,10 @@ class OrderFactory
     /**
      * {@inheritdoc}
      */
-    public function removeItem(OrderItemInterface $item): void
+    public function removeItem(OrderItem $item): void
     {
-        if ($this->order && $this->order->getItems()->contains($item)) {
-            $this->order->removeItem($item);
+        if ($this->order && $this->order->getOrderItem()->contains($item)) {
+            $this->order->removeOrderItem($item);
 
             // Run events
             $event = new GenericEvent($this->order);

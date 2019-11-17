@@ -167,8 +167,7 @@ class CartController extends AbstractController
     public function removeItem(Request $request, OrderItem $item): Response
     {
         $form = $this->createForm(RemoveItemType::class, $item);
-        $form->handleRequest($request);
-        
+        $form->handleRequest($request);        
         if ($form->isSubmitted() && $form->isValid()) {
             $this->orderFactory->removeItem($item);
             $this->addFlash('success', $this->translator->trans('app.cart.removeItem.message.success'));

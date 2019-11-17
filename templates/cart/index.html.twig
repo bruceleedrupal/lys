@@ -1,10 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
 
-        <div class="row pt-2 pb-2">                
+{% block content_header %}
+<div class="content-header">
+<div class="container-fluid">
+         <div class="row">                
                     <div class="col-6">
-                        <h2>{{ 'app.cart.title'|trans }}</h2>
+                        <h4>{{ 'app.cart.title'|trans }}</h4>
                     </div>
                     <div class="col-6 text-right">
                         {{ form_start(clearForm) }}
@@ -12,7 +14,14 @@
                             {{ form_widget(clearForm.submit) }}
                         {{ form_end(clearForm) }}
                     </div>
-        </div>
+        </div>    
+</div>
+</div>         
+{% endblock %}
+
+
+{% block body %}
+<div class="container-fluid">        
         <div class="row ">
                 <div class='table-responsive'>
                 <table class="table table-bordered">
@@ -20,9 +29,9 @@
                     <tr>
                         <th>{{ 'app.cart.table.column.product'|trans }}</th>
                         <th>{{ 'db.product.gongshi'|trans }}</th>
-                        <th>{{ 'app.cart.table.column.quantity'|trans }}</th>
+                        <th class='item-quantity-column'>{{ 'app.cart.table.column.quantity'|trans }}</th>
                         <th class='d-none d-sm-table-cell'>{{ 'db.product.priceTotal'|trans }}</th>
-                        <th>{{ 'app.default.remove'|trans }}</th>                        
+                        <th class='text-center'>{{ 'app.default.remove'|trans }}</th>                        
                     </tr>
                     </thead>                    
                     <tbody>
@@ -36,7 +45,7 @@
                             <td  class='d-none d-sm-table-cell'>
                                 {{ item.priceTotal }}
                             </td>
-                            <td>
+                            <td class='text-center'>
                                 {{ render(controller('App\\Controller\\CartController::removeItemForm', {'id' : item.id})) }}
                             </td>
                             
@@ -60,5 +69,5 @@
                 
             </div>    
         </div>
-    
+   </div> 
 {% endblock %}

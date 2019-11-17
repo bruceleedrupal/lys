@@ -1,8 +1,7 @@
-{{ form_start(form) }}
-<div class="float-left">
-    {{ form_widget(form.quantity) }}
-</div>
-<div class="float-left">
-    {{ form_widget(form.submit) }}
-</div>
+{{ form_start(form,{name:form.vars.name~'_'~form.vars.value.id}) }}
+
+{{ form_widget(form.quantity,{id: form.quantity.vars.id~'_'~form.vars.value.id }) }}
+
+
+{{ form_widget(form._token,{id: form._token.vars.id~'_'~form.vars.value.id }) }}
 {{ form_end(form) }}

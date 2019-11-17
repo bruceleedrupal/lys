@@ -1,5 +1,6 @@
-{{ form_start(form) }}
+{{ form_start(form,{name:form.vars.name~'_'~form.vars.value.id}) }}
 <fieldset>
-    {{ form_widget(form.submit) }}
+    {{ form_widget(form.submit,{id: form.submit.vars.id~'_'~form.vars.value.id }) }}
 </fieldset>
+{{ form_widget(form._token,{id: form._token.vars.id~'_'~form.vars.value.id }) }}
 {{ form_end(form) }}

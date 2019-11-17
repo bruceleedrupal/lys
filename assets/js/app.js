@@ -14,6 +14,7 @@ window.Popper = require('popper.js').default;
 const $ = require('jquery');
 global.$ = global.jQuery = $;
 require('bootstrap/js/src/dropdown.js');
+require('bootstrap/js/src/alert.js');
 require('admin-lte/build/js/AdminLTE.js');
 
 
@@ -29,6 +30,10 @@ jQuery.fn.clickToggle = function(a, b) {
 $(document).ready(function(){ 
   $('#cart-summary').click(function(e){
     e.stopPropagation();
+  });
+  
+  $('.setItemQuantityForm .setItemQuantitySelect').change(function(e){
+    $(this).closest('form').submit();  
   });
 });
 

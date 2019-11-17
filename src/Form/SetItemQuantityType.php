@@ -32,10 +32,11 @@ class SetItemQuantityType extends AbstractType
             'quantity',
             ChoiceType::class,
             [
-                'choices' =>array_combine(range(1, 20),range(1,20))
+                'choices' =>array_combine(range(1, 20),range(1,20)),
+                'attr'=>['class'=>'setItemQuantitySelect']
             ]
         );
-
+/*
         $builder->add(
             'submit',
             SubmitType::class,
@@ -45,13 +46,18 @@ class SetItemQuantityType extends AbstractType
                     'class'=>'btn-secondary'
                 ]
             ]
-        );
+        );*/
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => OrderItem::class,
+             'attr'=>[
+                    'class'=>'setItemQuantityForm'
+          ]
         ));
     }
+    
+
 }
