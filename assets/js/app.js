@@ -9,14 +9,13 @@
 //require('../scss/app.scss');
 
 
-window.Popper = require('popper.js').default;  
+//import Popper from 'popper.js';
+import $  from 'jquery';
+import Dropdown from 'bootstrap/js/src/dropdown.js';
+import Alert from 'bootstrap/js/src/alert.js';
+//require('admin-lte/build/js/AdminLTE.js');
 
-const $ = require('jquery');
 global.$ = global.jQuery = $;
-require('bootstrap/js/src/dropdown.js');
-require('bootstrap/js/src/alert.js');
-require('admin-lte/build/js/AdminLTE.js');
-
 
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
