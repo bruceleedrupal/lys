@@ -55,6 +55,18 @@ class Order
      * @ORM\Column(type="datetime")
      */
     private $updated;
+    
+    
+    /**
+     * @var User $createdBy
+     *
+     * @Gedmo\Blameable(on="create")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(referencedColumnName="id")
+     */
+    private $createdBy;
+    
+
 
     public function __construct()
     {

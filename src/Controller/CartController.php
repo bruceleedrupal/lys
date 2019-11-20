@@ -100,7 +100,7 @@ class CartController extends AbstractController
         
         if ($form->isSubmitted() && $form->isValid()) {
             $this->orderFactory->addItem($product, 1);
-            $this->addFlash('info', $this->translator->trans('app.cart.addItem.message.success',['%title%'=>$product->getTitle()]));
+            $this->addFlash('warning', $this->translator->trans('app.cart.addItem.message.success',['%title%'=>$product->getTitle()]));
         }
         
         return $this->redirect($request->headers->get('referer'));;
@@ -155,7 +155,7 @@ class CartController extends AbstractController
         
         if ($form->isSubmitted() && $form->isValid()) {
             $this->orderFactory->setItemQuantity($item, $form->getData()->getQuantity());
-            $this->addFlash('info', $this->translator->trans('app.cart.setItemQuantity.message.success',['%title%'=>$item->getProduct()->getTitle(),'%quantity%'=>$item->getQuantity()]));
+            $this->addFlash('warning', $this->translator->trans('app.cart.setItemQuantity.message.success',['%title%'=>$item->getProduct()->getTitle(),'%quantity%'=>$item->getQuantity()]));
         }
         
         return $this->redirectToRoute('cart');
@@ -170,7 +170,7 @@ class CartController extends AbstractController
         $form->handleRequest($request);        
         if ($form->isSubmitted() && $form->isValid()) {
             $this->orderFactory->removeItem($item);
-            $this->addFlash('info', $this->translator->trans('app.cart.removeItem.message.success',['%title%'=>$item->getProduct()->getTitle()]));
+            $this->addFlash('warning', $this->translator->trans('app.cart.removeItem.message.success',['%title%'=>$item->getProduct()->getTitle()]));
         }
         
         return $this->redirectToRoute('cart');

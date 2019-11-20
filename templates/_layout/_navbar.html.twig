@@ -3,9 +3,7 @@
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
       </li>
-      <li class="nav-item">
-        <a href="/" class="nav-link">首页</a>
-      </li>
+     
       <li class="nav-item">
         <a href="{{ path('product_index') }}" class="nav-link">工序</a>
       </li>
@@ -15,8 +13,38 @@
 
 
 
-<ul class="nav navbar-nav ml-auto">
-      <!-- Messages Dropdown Menu -->
+<ul class="nav navbar-nav ml-auto">      
+           <li class="nav-item user user-menu dropdown">
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}               
+                <a href="#"  data-toggle="dropdown" class="nav-link">
+                <img src="{{ app.user.AvatarUrl }}" class='user-image'/><span class="d-none d-sm-inline">{{ app.user.username }}</span>
+                </a>
+                
+             <ul class="dropdown-menu dropdown-menu-middle">
+              <!-- User image -->
+              <li class="user-header">
+                <img src="{{ app.user.AvatarUrl(160) }}" class="img-circle" alt="User Image">
+                <p><small>上次登录: {{  app.user.lastLogin | date("Y-m-d H:i") }}</small></p>
+              </li>
+              
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <div class="pull-left">
+                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                </div>
+                <div class="pull-right">
+                  <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default btn-flat">
+                  {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
+                </div>
+              </li>
+            </ul>            
+            
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}" class="nav-link">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
+      </li>
+      
+      
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           {{ render(controller('App\\Controller\\CartController::cartBlock')) }}

@@ -30,11 +30,31 @@ html {
 .table-responsive {
     white-space: nowrap;
 }
-.item-quantity-column {
-  width:90px;
+.item-quantity-column form {
+  min-width:60px;
 }
 
 .content-header {
   padding:10px 0.5rem;
 }
 
+li.user-header {
+    background-color: #3c8dbc;
+}
+.navbar-nav > .user-menu > .dropdown-menu > li.user-header {
+  height:auto;
+}
+.navbar-nav > .user-menu > .dropdown-menu {
+  width:260px;
+}
+.navbar-nav>.user-menu>.dropdown-menu>li.user-header>p {
+    color: rgba(255,255,255,0.8);
+}
+
+
+.main-header .navbar .nav>li>a:hover, .skin-blue .main-header .navbar .nav>li>a:active {
+
+}
+.dropdown-menu-middle {
+  left:-150%;
+}
