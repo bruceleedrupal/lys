@@ -65,6 +65,11 @@ class Order
      * @ORM\JoinColumn(referencedColumnName="id")
      */
     private $createdBy;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="orders")
+     */
+    private $member;
     
 
 
@@ -141,6 +146,18 @@ class Order
     public function setItemsSingle(?int $itemsSingle): self
     {
         $this->itemsSingle = $itemsSingle;
+
+        return $this;
+    }
+
+    public function getMember(): ?User
+    {
+        return $this->member;
+    }
+
+    public function setMember(?User $member): self
+    {
+        $this->member = $member;
 
         return $this;
     }

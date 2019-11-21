@@ -168,15 +168,15 @@ class OrderFactory
     /**
      * {@inheritdoc}
      */
-    public function setPayment(PaymentInterface $payment): void
+    public function selectMember(): void
     {
         if ($this->order) {
 
-            $this->order->setPayment($payment);
+          
 
             // Run events
-            $event = new GenericEvent($this->order);
-            $this->eventDispatcher->dispatch(Events::ORDER_UPDATED, $event);
+          //  $event = new GenericEvent($this->order);
+           // $this->eventDispatcher->dispatch(Events::ORDER_UPDATED, $event);
 
             $this->entityManager->persist($this->order);
             $this->entityManager->flush();

@@ -3,20 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\OrderItem;
+use App\Entity\Order;
 use App\Entity\Product;
 use App\Service\OrderFactory;
 use App\Form\AddItemType;
 use App\Form\ClearCartType;
 use App\Form\RemoveItemType;
-use App\Form\SetDiscountType;
+use App\Form\SelectMemberFormType;
 use App\Form\SetItemQuantityType;
-use App\Form\SetPaymentType;
-use App\Form\SetShipmentType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/cart")
@@ -113,13 +112,15 @@ class CartController extends AbstractController
     public function cart(OrderFactory $orderFactory)
     {
         $order = $orderFactory->getCurrent();
-        $clearForm = $this->createForm(ClearCartType::class, $order);        
+        $clearForm = $this->createForm(ClearCartType::class, $order); 
+        $selectMemberForm = $this->createForm(SelectMemberFormType::class, $order); 
         
         
         return $this->render('cart/index.html.twig', [
             'orderFactory' => $orderFactory,
             'order'=>$order,
-            'clearForm' => $clearForm->createView(),          
+            'clearForm' => $clearForm->createView(),  
+            'selectMemberForm'=>$selectMemberForm->createView(),
             'itemsInCart' => $order->getItemsTotal()
         ]);
     }
@@ -171,6 +172,28 @@ class CartController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->orderFactory->removeItem($item);
             $this->addFlash('warning', $this->translator->trans('app.cart.removeItem.message.success',['%title%'=>$item->getProduct()->getTitle()]));
+        }
+        
+        return $this->redirectToRoute('cart');
+    }
+    
+    /**
+     * @Route("/selectmember", name="cart.selectMember", methods={"POST"})
+     */
+    public function selectMember(Request $request, OrderFactory $orderFactory): Response
+    {
+        $order = $orderFactory->getCurrent();
+        
+        $form = $this->createForm(SelectMemberFormType::class, $order);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->orderFactory->selectMember();
+            
+            if($order->getMember())
+              $this->addFlash('warning', $this->translator->trans('app.cart.selectMember.update',['%title%'=>$order->getMember()->getUsername()]));
+            else 
+              $this->addFlash('warning', $this->translator->trans('app.cart.selectMember.updateEmpty'));
         }
         
         return $this->redirectToRoute('cart');

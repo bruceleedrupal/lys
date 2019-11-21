@@ -13,7 +13,7 @@
 import $  from 'jquery';
 import Dropdown from 'bootstrap/js/src/dropdown.js';
 import Alert from 'bootstrap/js/src/alert.js';
-//require('admin-lte/build/js/AdminLTE.js');
+require('admin-lte/build/js/AdminLTE.js');
 
 global.$ = global.jQuery = $;
 
@@ -34,5 +34,12 @@ $(document).ready(function(){
   $('.setItemQuantityForm .setItemQuantitySelect').change(function(e){
     $(this).closest('form').submit();  
   });
+
+  
+
+  $('#select_member_form_member').change(function(e){
+    $(this).closest('form').submit();
+  });
+
 });
 
