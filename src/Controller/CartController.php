@@ -193,7 +193,7 @@ class CartController extends AbstractController
             if($order->getBelongsTo())
                 $this->addFlash('warning', $this->translator->trans('app.cart.selectBelongsTo.update',['%title%'=>$order->getBelongsTo()->getUsername()]));
             else 
-              $this->addFlash('warning', $this->translator->trans('app.cart.selectMember.updateEmpty'));
+              $this->addFlash('warning', $this->translator->trans('app.cart.selectBelongsTo.updateEmpty'));
         }
         
         return $this->redirectToRoute('cart');
