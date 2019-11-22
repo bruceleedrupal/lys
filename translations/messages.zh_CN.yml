@@ -54,7 +54,7 @@ app:
             message:
                 success: 产品 %title% 已添加
                 failed: There was a problem with adding the product to the cart
-        selectMember:
+        selectBelongsTo:
             update: 工单已更新至员工%title%
             updateEmpty: 工单员工关联已删除
             select: 请选择员工
@@ -90,3 +90,4 @@ app:
             message:
                 success: Discount code has been used
                 codeNotFound: Discount code is invalid
+logout: 退出

@@ -56,20 +56,22 @@ class Order
      */
     private $updated;
     
-    
     /**
      * @var User $createdBy
      *
-     * @Gedmo\Blameable(on="create")
+     * @Gedmo\Blameable(on="create")     
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(referencedColumnName="id")
      */
     private $createdBy;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="orders")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="assignedOrders")
      */
-    private $member;
+    private $belongsTo;
+   
+
+  
     
 
 
@@ -150,15 +152,16 @@ class Order
         return $this;
     }
 
-    public function getMember(): ?User
+    public function getBelongsTo(): ?User
     {
-        return $this->member;
+        return $this->belongsTo;
     }
 
-    public function setMember(?User $member): self
+    public function setBelongsTo(?User $belongsTo): self
     {
-        $this->member = $member;
+        $this->belongsTo = $belongsTo;
 
         return $this;
     }
+
 }

@@ -9,7 +9,7 @@ use App\Service\OrderFactory;
 use App\Form\AddItemType;
 use App\Form\ClearCartType;
 use App\Form\RemoveItemType;
-use App\Form\SelectMemberFormType;
+use App\Form\SelectBelongsToFormType;
 use App\Form\SetItemQuantityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -113,7 +113,7 @@ class CartController extends AbstractController
     {
         $order = $orderFactory->getCurrent();
         $clearForm = $this->createForm(ClearCartType::class, $order); 
-        $selectMemberForm = $this->createForm(SelectMemberFormType::class, $order); 
+        $selectMemberForm = $this->createForm(SelectBelongsToFormType::class, $order); 
         
         
         return $this->render('cart/index.html.twig', [
@@ -184,14 +184,14 @@ class CartController extends AbstractController
     {
         $order = $orderFactory->getCurrent();
         
-        $form = $this->createForm(SelectMemberFormType::class, $order);
+        $form = $this->createForm(SelectBelongsToFormType::class, $order);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->orderFactory->selectMember();
+            $this->orderFactory->selectBelongsTo();
             
-            if($order->getMember())
-              $this->addFlash('warning', $this->translator->trans('app.cart.selectMember.update',['%title%'=>$order->getMember()->getUsername()]));
+            if($order->getBelongsTo())
+                $this->addFlash('warning', $this->translator->trans('app.cart.selectBelongsTo.update',['%title%'=>$order->getBelongsTo()->getUsername()]));
             else 
               $this->addFlash('warning', $this->translator->trans('app.cart.selectMember.updateEmpty'));
         }

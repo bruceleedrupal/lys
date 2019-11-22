@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class SelectMemberFormType extends AbstractType
+class SelectBelongsToFormType extends AbstractType
 {
     private $urlGenerator;
 
@@ -32,13 +32,13 @@ class SelectMemberFormType extends AbstractType
   
 
         $builder->add(
-            'member',
+            'belongsTo',
             EntityType::class,
             [
                 'class' => User::class,
                 'label'=>false,
                 'choice_label' => 'username',
-                'placeholder' => 'app.cart.selectMember.select',                
+                'placeholder' => 'app.cart.selectBelongsTo.select',                
             ]
         );
     }

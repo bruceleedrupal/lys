@@ -168,11 +168,9 @@ class OrderFactory
     /**
      * {@inheritdoc}
      */
-    public function selectMember(): void
+    public function selectBelongsTo(): void
     {
         if ($this->order) {
-
-          
 
             // Run events
           //  $event = new GenericEvent($this->order);
@@ -183,41 +181,7 @@ class OrderFactory
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setShipment(ShipmentInterface $shipment): void
-    {
-        if ($this->order) {
-
-            $this->order->setShipment($shipment);
-
-            // Run events
-            $event = new GenericEvent($this->order);
-            $this->eventDispatcher->dispatch(Events::ORDER_UPDATED, $event);
-
-            $this->entityManager->persist($this->order);
-            $this->entityManager->flush();
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setDiscount(DiscountInterface $discount): void
-    {
-        if ($this->order) {
-
-            $this->order->setDiscount($discount);
-
-            // Run events
-            $event = new GenericEvent($this->order);
-            $this->eventDispatcher->dispatch(Events::ORDER_UPDATED, $event);
-
-            $this->entityManager->persist($this->order);
-            $this->entityManager->flush();
-        }
-    }
+    
 
     /**
      * {@inheritdoc}
@@ -236,11 +200,5 @@ class OrderFactory
         return !$this->order->getItems();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function summary(): Summary
-    {
-        return new Summary($this->order);
-    }
+   
 }

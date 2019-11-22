@@ -37,7 +37,7 @@ $(document).ready(function(){
 
   
 
-  $('#select_member_form_member').change(function(e){
+  $('#select_belongs_to_form_belongsTo').change(function(e){
     $(this).closest('form').submit();
   });
 

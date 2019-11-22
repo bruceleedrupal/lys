@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}登录{% endblock %}
+{%  block body_id 'login' %}
+{% block body %}
+<div class='col-xs-12 col-sm-6 offset-sm-3'>
+<div class="login loginnormal">
+<form method="post" class='form-signin'>
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+    {{ include('security/loginurl.html.twig') }}
+    <label for="inputEmail" class="sr-only">Email/Tel</label>
+    <input value="{{ last_username }}" name="_username" id="inputUnamel" class="form-control"  required autofocus placeholder="输入用户名" >
+    <label for="inputPasswordForm" class="sr-only">Password</label>
+    <input type="password" name="_password" id="inputPasswordForm" class="form-control" placeholder="输入密码" required>
+
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" >
+
+    <div class="links"><a href="{{ path('app_register') }}">注册帐号</a><a href="{{ path('app_forgetpassword') }}">忘记密码</a></div>
+	
+    <button class="btn btn-lg btn-primary btn-block" type="submit">
+       登录
+    </button>
+</form>
+</div>
+</div>
+{% endblock %}

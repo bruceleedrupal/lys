@@ -33,14 +33,14 @@
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default btn-flat">
-                  {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
+                  <a href="{{ path('app_logout') }}" class="btn btn-default btn-flat">
+                  {{ 'logout'|trans() }}</a>
                 </div>
               </li>
             </ul>            
             
             {% else %}
-                <a href="{{ path('fos_user_security_login') }}" class="nav-link">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                <a href="#" class="nav-link">ddd</a>
             {% endif %}
       </li>
       
