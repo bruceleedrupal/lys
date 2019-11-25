@@ -13,7 +13,7 @@
 import $  from 'jquery';
 import Dropdown from 'bootstrap/js/src/dropdown.js';
 import Alert from 'bootstrap/js/src/alert.js';
-require('admin-lte/build/js/AdminLTE.js');
+import defaultExport from 'admin-lte/build/js/AdminLTE.js';
 
 global.$ = global.jQuery = $;
 
