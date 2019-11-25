@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}我创建的工单{% endblock %}
+
+{% block body %}
+    <h4 class='p-2'>我创建的工单</h4>
+    <div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>序号</th>             
+                <th>合计</th>                
+                <th>归属人</th>
+                <th>创建时间</th>
+                <th class="d-none d-sm-table-cell">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>              
+                <td>{{ order.priceTotal }}</td>                 
+                <td>{{ order.belongsTo ? order.belongsTo.username :'' }}</td>   
+                 <td>{{ order.created ? order.created|date('Y-m-d H:i') : '' }}</td>    
+                <td class="d-none d-sm-table-cell">
+                    <a href="{{ path('order_show', {'id': order.id}) }}">show</a>
+                    <a href="{{ path('order_edit', {'id': order.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="navigation">
+            {{ knp_pagination_render(orders) }}
+     </div>
+   </div>
+    <a href="{{ path('order_new') }}">Create new</a>
+{% endblock %}

@@ -4,6 +4,10 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    knp_menu.renderer.twig.options:
+        currentClass: 'active'
+        allow_safe_labels: true
+        ancestorClass: 'menu-open'
 
 services:
     # default configuration for services in *this* file
@@ -29,3 +33,8 @@ services:
         class: App\Form\User\RegistrationType
         tags:
             - { name: form.type, alias: app_user_registration }
+    app.menu_builder:
+        class: App\Menu\MenuBuilder       
+        arguments: ["@knp_menu.factory"]
+        tags:
+            - { name: knp_menu.menu_builder, method: createSidebar, alias: sidebar } 

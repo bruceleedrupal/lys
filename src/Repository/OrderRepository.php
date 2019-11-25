@@ -47,4 +47,23 @@ class OrderRepository extends ServiceEntityRepository
         ;
     }
     */
+    
+    public function findAllCreateByQueryBuilder($user)
+    {
+        $qb = $this->findAllByQueryBuilder();
+        $qb->andWhere('o.createdBy = :createdById')
+        ->setParameter('createdById', $user->getId());
+        return $qb;
+    }
+    
+    public function findAllByQueryBuilder($id=null){
+        
+        $qb =$this->createQueryBuilder('o');
+        if($id){
+            $qb->andWhere('o.id = :id ')
+            ->setParameter('id', $id);
+        }
+        return $qb->orderBy('o.id', 'desc');
+        
+    }
 }

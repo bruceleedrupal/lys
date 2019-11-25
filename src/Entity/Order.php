@@ -48,14 +48,7 @@ class Order
      */
     private $created;
     
-    /**
-     * @var \DateTime $updated
-     *
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime")
-     */
-    private $updated;
-    
+
     /**
      * @var User $createdBy
      *
@@ -175,5 +168,10 @@ class Order
 
         return $this;
     }
+    
+    public function getCreated(): \datetime {
+        return $this->created;;
+    }
+
 
 }
