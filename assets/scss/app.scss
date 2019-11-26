@@ -68,8 +68,12 @@ li.user-header {
 }
 
 #change_created_form {
+  min-width:310px;
  >.form-group {
   float:left;
+  .form-control {
+    width:auto;
+  }
  }
 }
 
