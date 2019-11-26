@@ -9,12 +9,11 @@
                         <h4>{{ 'app.cart.title'|trans }}</h4>
                     </div>
                     <div class="col-6 text-right">
-                        {{ form(clearForm) }}                        
-                   
+                        {{ form(clearForm) }} 
                     </div>
         </div>    
 </div>
-</div>         
+</div>
 {% endblock %}
 
 
@@ -62,7 +61,11 @@
                     </tr>
                     
                     <tr>
-                        <td colspan='5' class='text-left'>{{ form(selectMemberForm) }}</td>                        
+                        <td colspan='3' class='text-left'>{{ form(selectMemberForm) }}</td> 
+                        <td colspan='2' class='text-right'>
+                          {{ form(changeCreatedForm) }}
+                          
+                          </td>                        
                                                
                     </tr>
                     

@@ -11,6 +11,7 @@ use App\Form\ClearCartType;
 use App\Form\RemoveItemType;
 use App\Form\SelectBelongsToFormType;
 use App\Form\SetItemQuantityType;
+use App\Form\ChangeCreatedFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -114,6 +115,7 @@ class CartController extends AbstractController
         $order = $orderFactory->getCurrent();
         $clearForm = $this->createForm(ClearCartType::class, $order); 
         $selectMemberForm = $this->createForm(SelectBelongsToFormType::class, $order); 
+        $changeCreatedForm = $this->createForm(ChangeCreatedFormType::class, $order); 
         
         
         return $this->render('cart/index.html.twig', [
@@ -121,7 +123,8 @@ class CartController extends AbstractController
             'order'=>$order,
             'clearForm' => $clearForm->createView(),  
             'selectMemberForm'=>$selectMemberForm->createView(),
-            'itemsInCart' => $order->getItemsTotal()
+            'itemsInCart' => $order->getItemsTotal(),
+            'changeCreatedForm'=>$changeCreatedForm->createView()
         ]);
     }
     
@@ -188,12 +191,31 @@ class CartController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->orderFactory->selectBelongsTo();
+            $this->orderFactory->updateBindings();
             
             if($order->getBelongsTo())
                 $this->addFlash('warning', $this->translator->trans('app.cart.selectBelongsTo.update',['%title%'=>$order->getBelongsTo()->getUsername()]));
             else 
               $this->addFlash('warning', $this->translator->trans('app.cart.selectBelongsTo.updateEmpty'));
+        }
+        
+        return $this->redirectToRoute('cart');
+    }
+    
+    /**
+     * @Route("/changeCreated", name="cart.changeCreated", methods={"POST"})
+     */
+    public function changeCreated(Request $request, OrderFactory $orderFactory): Response
+    {
+        $order = $orderFactory->getCurrent();
+        
+        $form = $this->createForm(ChangeCreatedFormType::class, $order);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->orderFactory->updateBindings();
+            $this->addFlash('warning', $this->translator->trans('app.cart.changeCreated.updated',['%title%'=>$order->getCreated()->format('Y-m-d')]));
+          
         }
         
         return $this->redirectToRoute('cart');

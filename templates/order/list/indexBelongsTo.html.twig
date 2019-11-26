@@ -1,16 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}我创建的工单{% endblock %}
+{% block title %}分配给我的工单{% endblock %}
 
 {%  block content_header %}
     <div class="container-fluid">
         <div class="row">
           <div class="col-sm-12">
-            <h4>我创建的工单</h4>
+            <h4>分配给我的工单</h4>
           </div>
         </div>
  </div>
 {% endblock  %}
+
 
 {% block body %}
     <div class="table-responsive">
@@ -18,8 +19,7 @@
         <thead>
             <tr>
                 <th>序号</th>             
-                <th>合计</th>                
-                <th>归属人</th>
+                <th>合计</th>
                 <th>创建时间</th>
                 <th class="d-none d-sm-table-cell">操作</th>
             </tr>
@@ -28,10 +28,9 @@
         {% for order in orders %}
             <tr>
                 <td><a href="{{ path('order_show', {'id': order.id}) }}">{{ order.id }}</a></td>              
-                <td>{{ order.priceTotal }}</td>                 
-                <td>{{ order.belongsTo ? order.belongsTo.username :'' }}</td>   
+                <td>{{ order.priceTotal }}</td>
                  <td>{{ order.created ? order.created|date('Y-m-d H:i') : '' }}</td>    
-                <td class="d-none d-sm-table-cell">                  
+                <td class="d-none d-sm-table-cell">                 
                     <a class="btn btn-info" href="{{ path('order_edit', {'id': order.id}) }}">修改</a>
                 </td>
             </tr>

@@ -2,14 +2,17 @@
 namespace App\Menu;
 
 use Knp\Menu\FactoryInterface;
-
+use Symfony\Component\Security\Core\Security;
 class MenuBuilder 
 {
+    protected $security;
+    protected $factory;
   
     
-    public function __construct(FactoryInterface $factory)
+    public function __construct(FactoryInterface $factory,Security $security)
     {
         $this->factory = $factory;
+        $this->security = $security;
     }
 
     public function createSidebar(array $options)
@@ -51,16 +54,28 @@ class MenuBuilder
             'extras' => array('safe_label' => true),
         ]);
 
-        $menu['gdlb']->addChild('wdgd', [
-            'route' => 'order_indexCreatedBy',
-             'label' => "<i class='nav-icon fa fa-circle nav-icon'></i>我创建的工单",
-            'linkAttributes'=>['class'=>'nav-link'],
-            'attributes'=>[
-                'class'=>'nav-item',
-            ],
-            'extras' => array('safe_label' => true),
-        ]);
         
+        if($this->security->getUser()){
+            $menu['gdlb']->addChild('wdgd', [
+                'route' => 'order_indexCreatedBy',
+                 'label' => "<i class='nav-icon fa fa-circle nav-icon'></i>我创建的工单",
+                'linkAttributes'=>['class'=>'nav-link'],
+                'attributes'=>[
+                    'class'=>'nav-item',
+                ],
+                'extras' => array('safe_label' => true),
+            ]);
+            
+            $menu['gdlb']->addChild('fpgwgd', [
+                'route' => 'order_indexbelongsTo',
+                'label' => "<i class='nav-icon fa fa-circle nav-icon'></i>分配给我的工单",
+                'linkAttributes'=>['class'=>'nav-link'],
+                'attributes'=>[
+                    'class'=>'nav-item',
+                ],
+                'extras' => array('safe_label' => true),
+            ]);
+        }
         return $menu;
     }
 }

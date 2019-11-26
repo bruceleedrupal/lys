@@ -17,24 +17,25 @@ use Symfony\Component\Security\Core\Security;
 class OrderController extends AbstractController
 {
     protected $security;
+    private $orderRepository;
+    private $paginator;
     
-    
-    
-    public function __construct(Security $security)
+    public function __construct(Security $security,OrderRepository $orderRepository,PaginatorInterface $paginator)
     {
         $this->security = $security;
-       
+        $this->orderRepository = $orderRepository;
+        $this->paginator = $paginator;
     }
     
     
     /**
      * @Route("/indexall", name="order_indexAll", methods={"GET"})
      */
-    public function indexAll(OrderRepository $orderRepository,PaginatorInterface $paginator,Request $request): Response
+    public function indexAll(Request $request): Response
     {
-        $query= $orderRepository->findAllByQueryBuilder()->getQuery();
+        $query= $this->orderRepository->findAllByQueryBuilder()->getQuery();
         
-        $orders = $paginator->paginate(
+        $orders = $this->paginator->paginate(
             // Doctrine Query, not results
             $query,
             // Define the page parameter
@@ -53,13 +54,13 @@ class OrderController extends AbstractController
     /**
      * @Route("/indexcreatedBy", name="order_indexCreatedBy", methods={"GET"})
      */
-    public function indexCreateBy(OrderRepository $orderRepository,PaginatorInterface $paginator,Request $request): Response
+    public function indexCreateBy(Request $request): Response
     {
         $user = $this->security->getUser();
         
-        $query= $orderRepository->findAllCreateByQueryBuilder($user)->getQuery();
+        $query= $this->orderRepository->findAllCreateByQueryBuilder($user)->getQuery();
         
-        $orders = $paginator->paginate(
+        $orders = $this->paginator->paginate(
             // Doctrine Query, not results
             $query,
             // Define the page parameter
@@ -70,6 +71,30 @@ class OrderController extends AbstractController
         
         
         return $this->render('order/list/indexCreatedBy.html.twig', [
+            'orders' => $orders,
+        ]);
+    }
+    
+    /**
+     * @Route("/indexbelongsTo", name="order_indexbelongsTo", methods={"GET"})
+     */
+    public function indexbelongsTo(Request $request): Response
+    {
+        $user = $this->security->getUser();
+        
+        $query= $this->orderRepository->findAllBelongsToQueryBuilder($user)->getQuery();
+        
+        $orders =$this->paginator->paginate(
+            // Doctrine Query, not results
+            $query,
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            10
+            );
+        
+        
+        return $this->render('order/list/indexBelongsTo.html.twig', [
             'orders' => $orders,
         ]);
     }
@@ -102,7 +127,7 @@ class OrderController extends AbstractController
      */
     public function show(Order $order): Response
     {
-        return $this->render('order/show.html.twig', [
+        return $this->render('order/show2.html.twig', [
             'order' => $order,
         ]);
     }

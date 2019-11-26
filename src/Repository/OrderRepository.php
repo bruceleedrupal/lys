@@ -56,6 +56,14 @@ class OrderRepository extends ServiceEntityRepository
         return $qb;
     }
     
+    
+    public function findAllBelongsToQueryBuilder($user) {
+        $qb = $this->findAllByQueryBuilder();
+        $qb->andWhere('o.belongsTo = :belongsTo')
+        ->setParameter('belongsTo', $user->getId());
+        return $qb;
+    }
+    
     public function findAllByQueryBuilder($id=null){
         
         $qb =$this->createQueryBuilder('o');

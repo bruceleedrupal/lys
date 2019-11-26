@@ -172,6 +172,11 @@ class Order
     public function getCreated(): \datetime {
         return $this->created;;
     }
+    
+    public function setCreated(\datetime $created) {
+        $this->created = $created;
+        return $this;
+    }
 
 
 }

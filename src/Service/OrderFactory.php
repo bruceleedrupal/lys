@@ -168,8 +168,8 @@ class OrderFactory
     /**
      * {@inheritdoc}
      */
-    public function selectBelongsTo(): void
-    {
+    public function updateBindings(): void
+    {    
         if ($this->order) {
 
             // Run events
