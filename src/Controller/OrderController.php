@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Security\Core\Security;
+use App\Service\OrderFactory;
+use App\Service\OrderSessionStorage;
 /**
  * @Route("/order")
  */
@@ -18,13 +20,18 @@ class OrderController extends AbstractController
 {
     protected $security;
     private $orderRepository;
-    private $paginator;
+    private $paginator;    
+    private $orderFactory;
+    private $orderSessionStorage;
     
-    public function __construct(Security $security,OrderRepository $orderRepository,PaginatorInterface $paginator)
+    public function __construct(Security $security,OrderRepository $orderRepository,PaginatorInterface $paginator,OrderFactory $orderFactory,
+        OrderSessionStorage $orderSessionStorage)
     {
         $this->security = $security;
         $this->orderRepository = $orderRepository;
         $this->paginator = $paginator;
+        $this->orderFactory = $orderFactory;
+        $this->orderSessionStorage = $orderSessionStorage;
     }
     
     
@@ -47,6 +54,7 @@ class OrderController extends AbstractController
         
         return $this->render('order/list/indexAll.html.twig', [
             'orders' => $orders,
+            'currentOrderId'=>$this->orderFactory->getCurrent()->getId(),
         ]);
     }
     
@@ -139,15 +147,25 @@ class OrderController extends AbstractController
     {
         $form = $this->createForm(OrderType::class, $order);
         $form->handleRequest($request);
+        
+        
+        $currentOrder = $this->orderFactory->getCurrent();
+        
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('order_index');
+            if($form->get('submit')->isClicked()) {
+                $this->orderSessionStorage->set($order->getId());
+                return $this->redirectToRoute('cart');
+            }
+            else if($form->get('cancel')->isClicked()){
+                return $this->redirectToRoute('order_indexAll');
+            }
+            return $this->redirectToRoute('order_indexAll');
         }
 
         return $this->render('order/edit.html.twig', [
             'order' => $order,
+            'currentOrder'=>$currentOrder,
             'form' => $form->createView(),
         ]);
     }

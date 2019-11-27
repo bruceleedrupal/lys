@@ -35,7 +35,7 @@ app:
                 product: Product
                 price: Price
     cart:
-        title: 工单结算
+        title: '%title%号工单结算'
         table:
             column:
                 product: 产品

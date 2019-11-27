@@ -24,7 +24,7 @@
                 <th class="d-none d-sm-table-cell">创建人</th>
                 <th>归属人</th>
                 <th>创建时间</th>
-                <th class="d-none d-sm-table-cell">操作</th>
+                <th>操作</th>
             </tr>
         </thead>
         <tbody>
@@ -35,8 +35,11 @@
                 <td class="d-none d-sm-table-cell">{{ order.createdBy ? order.createdBy.username :'' }}</td>     
                 <td>{{ order.belongsTo ? order.belongsTo.username :'' }}</td>   
                  <td>{{ order.created ? order.created|date('Y-m-d H:i') : '' }}</td>    
-                <td class="d-none d-sm-table-cell">                    
-                    <a class="btn btn-info" href="{{ path('order_edit', {'id': order.id}) }}">修改</a>
+                <td>                    
+                    {% if order.getId()!= currentOrderId %}<a class="btn btn-info" href="{{ path('order_edit', {'id': order.id}) }}">载入修改</a>
+                    {% else %}
+                    <button class='btn btn-warning'>正在编辑</button
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -49,6 +52,5 @@
     <div class="navigation">
             {{ knp_pagination_render(orders) }}
      </div>
-   </div>
-    <a class="btn btn-info" href="{{ path('order_new') }}">添加工单</a>
+   </div>    
 {% endblock %}

@@ -41,7 +41,7 @@
                         
                         <tr>                            
                              <td colspan='4'>
-                                <a href="{{ path('cart') }}" class='btn btn-success btn-block'>{{ 'app.cart.title'|trans }}</a>
+                                <a href="{{ path('cart') }}" class='btn btn-success btn-block'>{{ 'app.cart.title'|trans({'%title%':order.id}) }}</a>
                             </td>
                         </tr>
                        

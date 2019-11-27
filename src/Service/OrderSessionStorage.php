@@ -52,7 +52,7 @@ class OrderSessionStorage
         return $this->session->has(self::ORDER_KEY_NAME);
     }
 
-    public function get(): int
+    public function get(): string
     { 
        return $this->session->get(self::ORDER_KEY_NAME);
     }
