@@ -21,7 +21,7 @@
                 <th>编号</th>
                 <th>用户名</th>
                 <th>角色</th>               
-                <th>最近登录时间</th>
+                <th class="d-none d-sm-table-cell">最近登录时间</th>
                 <th>操作</th>
             </tr>
         </thead>
@@ -38,7 +38,7 @@
                 
                 
                 
-                <td>{{ user.lastLogin ? user.lastLogin|date('Y-m-d H:i:s') : '' }}</td>                
+                <td class="d-none d-sm-table-cell">{{ user.lastLogin ? user.lastLogin|date('Y-m-d H:i:s') : '' }}</td>                
                 <td>
                     <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
                     <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
