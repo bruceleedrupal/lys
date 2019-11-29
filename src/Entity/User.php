@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
@@ -33,7 +33,8 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @var string The hashed password
+     * @var string The hashed password     
+     * @Assert\NotBlank(groups={"registration"})
      * @ORM\Column(type="string")
      */
     private $password;
@@ -92,6 +93,18 @@ class User implements UserInterface
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
+        return array_unique($roles);
+    }
+    
+    
+    /**
+     * @see UserInterface
+     */
+    public function getDisplayRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER       
+        
         return array_unique($roles);
     }
 
@@ -182,6 +195,18 @@ class User implements UserInterface
                 $assignedOrder->setBelongsTo(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreated(): ?\DateTimeInterface
+    {
+        return $this->created;
+    }
+
+    public function setCreated(\DateTimeInterface $created): self
+    {
+        $this->created = $created;
 
         return $this;
     }

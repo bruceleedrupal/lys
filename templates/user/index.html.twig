@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{%  block content_header %}
+    <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12">
+            <h4>用户列表</h4>
+          </div>
+        </div>
+ </div>
+{% endblock  %}
+
+
+{% block body %}    
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>编号</th>
+                <th>用户名</th>
+                <th>角色</th>               
+                <th>最近登录时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>
+                    {% for role in user.displayRoles %}                    
+                     {{ role|trans }}<br/>                        
+                    {% endfor %}      
+                </td>                    
+                
+                
+                
+                <td>{{ user.lastLogin ? user.lastLogin|date('Y-m-d H:i:s') : '' }}</td>                
+                <td>
+                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
+                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_new') }}">Create new</a>
+{% endblock %}

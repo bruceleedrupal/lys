@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}编辑用户:{{ user.username }}{% endblock %}
+{%  block content_header %}
+    <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12">
+            <h4>编辑用户:{{ user.username }}</h4>
+          </div>
+        </div>
+ </div>
+{% endblock  %}
+
+{% block body %}
+
+    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('user_index') }}">back to list</a>
+
+    {{ include('user/_delete_form.html.twig') }}
+{% endblock %}

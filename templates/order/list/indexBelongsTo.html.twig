@@ -20,8 +20,7 @@
             <tr>
                 <th>序号</th>             
                 <th>合计</th>
-                <th>创建时间</th>
-                <th class="d-none d-sm-table-cell">操作</th>
+                <th>创建时间</th>              
             </tr>
         </thead>
         <tbody>
@@ -29,10 +28,7 @@
             <tr>
                 <td><a href="{{ path('order_show', {'id': order.id}) }}">{{ order.id }}</a></td>              
                 <td>{{ order.priceTotal }}</td>
-                 <td>{{ order.created ? order.created|date('Y-m-d H:i') : '' }}</td>    
-                <td class="d-none d-sm-table-cell">                 
-                    <a class="btn btn-info" href="{{ path('order_edit', {'id': order.id}) }}">修改</a>
-                </td>
+                 <td>{{ order.created ? order.created|date('Y-m-d H:i') : '' }}</td>             
             </tr>
         {% else %}
             <tr>
@@ -45,5 +41,5 @@
             {{ knp_pagination_render(orders) }}
      </div>
    </div>
-    <a class="btn btn-info" href="{{ path('order_new') }}">添加工单</a>
+    
 {% endblock %}

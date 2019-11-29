@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 /**
  * @Route("/product")
  */
@@ -27,6 +27,7 @@ class ProductController extends AbstractController
 
     /**
      * @Route("/new", name="product_new", methods={"GET","POST"})
+     * @IsGranted({"ROLE_ADMIN"})
      */
     public function new(Request $request): Response
     {
@@ -60,6 +61,7 @@ class ProductController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="product_edit", methods={"GET","POST"})
+     * @IsGranted({"ROLE_ADMIN"})
      */
     public function edit(Request $request, Product $product): Response
     {

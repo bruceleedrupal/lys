@@ -13,6 +13,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Security\Core\Security;
 use App\Service\OrderFactory;
 use App\Service\OrderSessionStorage;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 /**
  * @Route("/order")
  */
@@ -37,6 +38,7 @@ class OrderController extends AbstractController
     
     /**
      * @Route("/indexall", name="order_indexAll", methods={"GET"})
+     * @IsGranted({"ROLE_ADMIN"})
      */
     public function indexAll(Request $request): Response
     {
@@ -61,6 +63,7 @@ class OrderController extends AbstractController
     
     /**
      * @Route("/indexcreatedBy", name="order_indexCreatedBy", methods={"GET"})
+     * @IsGranted({"ROLE_ADMIN"})
      */
     public function indexCreateBy(Request $request): Response
     {
@@ -85,6 +88,7 @@ class OrderController extends AbstractController
     
     /**
      * @Route("/indexbelongsTo", name="order_indexbelongsTo", methods={"GET"})
+     * @IsGranted({"ROLE_USER"})
      */
     public function indexbelongsTo(Request $request): Response
     {
@@ -109,6 +113,7 @@ class OrderController extends AbstractController
 
     /**
      * @Route("/new", name="order_new", methods={"GET","POST"})
+     * @IsGranted({"ROLE_ADMIN"})
      */
     public function new(Request $request): Response
     {
@@ -142,6 +147,7 @@ class OrderController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="order_edit", methods={"GET","POST"})
+     * @IsGranted({"ROLE_ADMIN"})
      */
     public function edit(Request $request, Order $order): Response
     {

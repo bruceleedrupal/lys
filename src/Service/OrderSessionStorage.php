@@ -28,7 +28,7 @@ class OrderSessionStorage
         $this->session = $session;
     }
 
-    public function set(string $orderId): void
+    public function set(int $orderId): void
     {
         $this->session->set(self::ORDER_KEY_NAME, $orderId);
     }
@@ -52,7 +52,7 @@ class OrderSessionStorage
         return $this->session->has(self::ORDER_KEY_NAME);
     }
 
-    public function get(): string
+    public function get(): int
     { 
        return $this->session->get(self::ORDER_KEY_NAME);
     }
