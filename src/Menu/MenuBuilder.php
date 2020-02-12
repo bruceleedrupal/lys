@@ -34,7 +34,7 @@ class MenuBuilder
         if($isLoggedin) {
         $menu->addChild('gdlb',[
             'uri'=>'#',
-            'label' => "<i class='nav-icon fa fa-list-alt'></i>工单列表 ",
+            'label' => "<i class='nav-icon fa fa-list-alt'></i>工单 ",
             'linkAttributes'=>['class'=>'nav-link'],
             'childrenAttributes'=>[
                 'class'=>'nav nav-treeview',               
@@ -50,7 +50,21 @@ class MenuBuilder
         if($isAdmin) {
         $menu['gdlb']->addChild('sygd', [
             'route' => 'order_indexAll' ,
-            'label' => "<i class='nav-icon fa fa-circle nav-icon'></i>所有工单",
+            'label' => "<i class='nav-icon fa fa-circle nav-icon'></i>工单详情",
+            'linkAttributes'=>['class'=>'nav-link'],
+            'attributes'=>[
+                'class'=>'nav-item',
+            ],
+            'extras' => array('safe_label' => true),
+        ]);
+        
+        
+        
+        
+        $menu['gdlb']->addChild('order_gdtj', [
+            'route' => 'order_gdtj' ,
+            
+            'label' => "<i class='nav-icon fa fa-circle nav-icon'></i>工单统计",
             'linkAttributes'=>['class'=>'nav-link'],
             'attributes'=>[
                 'class'=>'nav-item',

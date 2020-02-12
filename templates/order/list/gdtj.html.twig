@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}工单统计{% endblock %}
+
+
+
+{%  block content_header %}
+    <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12">
+            <h4>所有工单</h4>
+          </div>
+        </div>
+ </div>
+{% endblock  %}
+
+{% block body %}
+   {{ form_start(searchForm) }}
+   {{ form_widget(searchForm.order_start) }}-{{ form_widget(searchForm.order_end) }}
+   &nbsp;{{ form_widget(searchForm.user) }}&nbsp;
+   &nbsp;{{ form_widget(searchForm.submit) }}&nbsp;
+   <a href="{{ path('order_gdtj') }}" class='btn btn-success'>复位</a>
+   &nbsp;<a href="{{ currentMonthUrl  }}"  class='btn btn-info'>本月</a>
+   &nbsp;<a href="{{ currentYearUrl  }}"  class='btn btn-info'>本年</a>
+   {{ form_end(searchForm) }}
+   
+   <div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                           
+                <th>合计</th>   
+                <th>用户</th>             
+             
+               
+            </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}  
+            <tr>                              
+                <td>{{ order.sumPriceTotal }}</td> 
+                <td>{{ order.order.belongsTo.username}}</td>                   
+               
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">无记录</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+   
+   
+    <div class="navigation">
+            {{ knp_pagination_render(orders) }}
+     </div>
+   </div>    
+{% endblock %}

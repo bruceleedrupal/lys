@@ -15,6 +15,16 @@
 {% endblock  %}
 
 {% block body %}
+
+   {{ form_start(searchForm) }}
+   {{ form_widget(searchForm.order_start) }}-{{ form_widget(searchForm.order_end) }}
+   &nbsp;{{ form_widget(searchForm.user) }}&nbsp;
+   &nbsp;{{ form_widget(searchForm.submit) }}&nbsp;
+   <a href="{{ path('order_indexAll') }}" class='btn btn-success'>复位</a>
+  
+   {{ form_end(searchForm) }}
+   
+   
     <div class="table-responsive">
     <table class="table">
         <thead>

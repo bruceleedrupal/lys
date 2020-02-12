@@ -13,6 +13,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Security\Core\Security;
 use App\Service\OrderFactory;
 use App\Service\OrderSessionStorage;
+use App\Form\Search\OrderSearchType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 /**
  * @Route("/order")
@@ -42,11 +43,37 @@ class OrderController extends AbstractController
      */
     public function indexAll(Request $request): Response
     {
-        $query= $this->orderRepository->findAllByQueryBuilder()->getQuery();
+        
+        
+        
+        $searchForm = $this->createForm(OrderSearchType::class);
+        
+        
+        $qb = $this->orderRepository->createQueryBuilder('o');
+        
+        $searchForm->handleRequest($request);
+        
+        if($searchForm->isSubmitted() && $searchForm->isValid()){
+            $searchData= $searchForm->getData();
+            if($searchData['order_start']) {
+                $qb->andWhere('o.created >=:order_start')
+                ->setParameter('order_start', $searchData['order_start']);
+            }
+            if($searchData['order_end']) {
+                $qb->andWhere('o.created<=:order_end')
+                ->setParameter('order_end', $searchData['order_end']);
+            }
+            if($searchData['user']){
+                $qb->andWhere('o.belongsTo=:user')
+                ->setParameter('user', $searchData['user']);
+            }
+        }
+        
+        
         
         $orders = $this->paginator->paginate(
             // Doctrine Query, not results
-            $query,
+            $qb->getQuery(),
             // Define the page parameter
             $request->query->getInt('page', 1),
             // Items per page
@@ -57,6 +84,81 @@ class OrderController extends AbstractController
         return $this->render('order/list/indexAll.html.twig', [
             'orders' => $orders,
             'currentOrderId'=>$this->orderFactory->getCurrent()->getId(),
+            'searchForm'=>$searchForm->createView()
+        ]);
+    }
+    
+    
+    /**
+     * @Route("/gdtj", name="order_gdtj", methods={"GET"})
+     * @IsGranted({"ROLE_ADMIN"})
+     */
+    public function orderGdtj(Request $request): Response
+    {   
+        $firstDayOfMonth = date('Y-m-01', strtotime(date("Y-m-d")));
+        $lastDayofMonth = date('Y-m-d', strtotime("$firstDayOfMonth +1 month -1 day"));
+        $currentMonthUrl = $this->generateUrl('order_gdtj',['order_start'=>$firstDayOfMonth,'order_end'=>$lastDayofMonth]);
+        
+        $firstDayOfYear = date('Y-01-01', strtotime(date("Y-m-d")));
+        $lastDayofMonth = date('Y-m-d', strtotime("$firstDayOfMonth +1 year -1 day"));
+        $currentYearUrl = $this->generateUrl('order_gdtj',['order_start'=>$firstDayOfYear,'order_end'=>$lastDayofMonth]);
+        
+        
+        $searchForm = $this->createForm(OrderSearchType::class);
+        
+        $searchForm->get('order_start')->setData(\DateTime::createFromFormat('Y-m-d', $firstDayOfMonth));
+        
+        $qb = $this->orderRepository->createQueryBuilder('o');
+        
+        
+        $searchForm->handleRequest($request);
+        
+        if($searchForm->isSubmitted() && $searchForm->isValid()){            
+            $searchData= $searchForm->getData();
+            
+            if($searchData['order_start']) {
+                $qb->andWhere('o.created >=:order_start')
+                   ->setParameter('order_start', $searchData['order_start']);
+            }
+            if($searchData['order_end']) {
+                $qb->andWhere('o.created<=:order_end')
+                ->setParameter('order_end', $searchData['order_end']);
+            }
+            if($searchData['user']){
+                $qb->andWhere('o.belongsTo=:user')
+                ->setParameter('user', $searchData['user']);
+            }
+        }
+       
+        $qb->andWhere('o.belongsTo is not null');
+        $qb->select('sum(o.priceTotal) as sumPriceTotal,o as order');
+        $qb->groupBy('o.belongsTo');
+        $qb->orderBy('sumPriceTotal','desc');
+        
+        
+        
+        
+       
+        
+        
+        $orders = $this->paginator->paginate(
+            // Doctrine Query, not results
+            $qb->getQuery(),
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            10,
+            ['distinct'=>false,
+             'wrap-queries' => true
+            ]
+        );
+        
+        
+        return $this->render('order/list/gdtj.html.twig', [
+            'orders' => $orders,  
+            'searchForm'=>$searchForm->createView(),            
+            'currentMonthUrl'=>$currentMonthUrl,
+            'currentYearUrl'=>$currentYearUrl
         ]);
     }
     
@@ -139,6 +241,16 @@ class OrderController extends AbstractController
      * @Route("/{id}", name="order_show", methods={"GET"})
      */
     public function show(Order $order): Response
+    {
+        return $this->render('order/show2.html.twig', [
+            'order' => $order,
+        ]);
+    }
+    
+    /**
+     * @Route("/{id}/pdf", name="order_show_pdf", methods={"GET"})
+     */
+    public function showpdf(Order $order): Response
     {
         return $this->render('order/show2.html.twig', [
             'order' => $order,
