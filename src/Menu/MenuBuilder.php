@@ -61,9 +61,9 @@ class MenuBuilder
         
         
         
+        
         $menu['gdlb']->addChild('order_gdtj', [
-            'route' => 'order_gdtj' ,
-            
+            'route' => 'order_gdtj',            
             'label' => "<i class='nav-icon fa fa-circle nav-icon'></i>工单统计",
             'linkAttributes'=>['class'=>'nav-link'],
             'attributes'=>[

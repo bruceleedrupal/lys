@@ -15,6 +15,8 @@ use App\Service\OrderFactory;
 use App\Service\OrderSessionStorage;
 use App\Form\Search\OrderSearchType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 /**
  * @Route("/order")
  */
@@ -90,45 +92,55 @@ class OrderController extends AbstractController
     
     
     /**
-     * @Route("/gdtj", name="order_gdtj", methods={"GET"})
+     * @Route("/gdtj.{_format}", defaults={"page": "1", "_format"="html"},name="order_gdtj", methods={"GET"})
      * @IsGranted({"ROLE_ADMIN"})
      */
-    public function orderGdtj(Request $request): Response
+    public function orderGdtj(Request $request,string $_format): Response
     {   
+        
         $firstDayOfMonth = date('Y-m-01', strtotime(date("Y-m-d")));
         $lastDayofMonth = date('Y-m-d', strtotime("$firstDayOfMonth +1 month -1 day"));
         $currentMonthUrl = $this->generateUrl('order_gdtj',['order_start'=>$firstDayOfMonth,'order_end'=>$lastDayofMonth]);
         
         $firstDayOfYear = date('Y-01-01', strtotime(date("Y-m-d")));
-        $lastDayofMonth = date('Y-m-d', strtotime("$firstDayOfMonth +1 year -1 day"));
-        $currentYearUrl = $this->generateUrl('order_gdtj',['order_start'=>$firstDayOfYear,'order_end'=>$lastDayofMonth]);
+        $lastDayofYear = date('Y-m-d', strtotime("$firstDayOfYear +1 year -1 day"));
+        $currentYearUrl = $this->generateUrl('order_gdtj',['order_start'=>$firstDayOfYear,'order_end'=>$lastDayofYear]);
         
+        
+        $firstDayOfLastMonth = date('Y-m-01', strtotime(date("Y-m-d")." -1 month"));
+        $lastDayofLastMonth = date('Y-m-d', strtotime("$firstDayOfLastMonth +1 month -1 day"));
+        $lastMonthUrl = $this->generateUrl('order_gdtj',['order_start'=>$firstDayOfLastMonth,'order_end'=>$lastDayofLastMonth]);
+        
+        $firstDayOfLastYear = date('Y-01-01', strtotime(date("Y-m-d")." -1 year"));
+        $lastDayofLastYear = date('Y-m-d', strtotime("$firstDayOfLastYear +1 year -1 day"));
+        $lastYearUrl = $this->generateUrl('order_gdtj',['order_start'=>$firstDayOfLastYear,'order_end'=>$lastDayofLastYear]);
         
         $searchForm = $this->createForm(OrderSearchType::class);
         
-        $searchForm->get('order_start')->setData(\DateTime::createFromFormat('Y-m-d', $firstDayOfMonth));
         
+        if(!$searchForm->isSubmitted()){  
+           $searchForm->get('order_start')->setData(\DateTime::createFromFormat('Y-m-d', $firstDayOfMonth));
+           $searchForm->get('order_end')->setData(\DateTime::createFromFormat('Y-m-d', $lastDayofMonth));
+        }
         $qb = $this->orderRepository->createQueryBuilder('o');
-        
         
         $searchForm->handleRequest($request);
         
-        if($searchForm->isSubmitted() && $searchForm->isValid()){            
-            $searchData= $searchForm->getData();
-            
-            if($searchData['order_start']) {
-                $qb->andWhere('o.created >=:order_start')
-                   ->setParameter('order_start', $searchData['order_start']);
-            }
-            if($searchData['order_end']) {
-                $qb->andWhere('o.created<=:order_end')
-                ->setParameter('order_end', $searchData['order_end']);
-            }
-            if($searchData['user']){
-                $qb->andWhere('o.belongsTo=:user')
-                ->setParameter('user', $searchData['user']);
-            }
+        if($order_start = $searchForm->get('order_start')->getData() ) {
+            $qb->andWhere('o.created >=:order_start')
+            ->setParameter('order_start', $order_start);
         }
+        
+        if($order_end = $searchForm->get('order_end')->getData()) {
+            $qb->andWhere('o.created<=:order_end')
+            ->setParameter('order_end', $order_end);
+        }
+        if($order_user = $searchForm->get('user')->getData()){
+            $qb->andWhere('o.belongsTo=:user')
+            ->setParameter('user', $order_user);
+        }
+      
+        
        
         $qb->andWhere('o.belongsTo is not null');
         $qb->select('sum(o.priceTotal) as sumPriceTotal,o as order');
@@ -139,7 +151,48 @@ class OrderController extends AbstractController
         
         
        
-        
+        if($_format=='xls'){
+            $filename= 'gdtj'.($order_start ? $order_start->format('Ymd'):'').($order_end ? '-'.$order_end->format('Ymd'):'').".xlsx";
+           
+            
+            
+            $spreadsheet = new Spreadsheet();
+            $sheet = $spreadsheet->getActiveSheet();
+            
+            
+            $sheet
+            ->setCellValue('A1', '用户')
+            ->setCellValue('B1', '合计');
+            
+            
+            $orders = $qb->getQuery()->getResult();
+            
+            
+            foreach($orders as $i=>$order){
+                $sheet
+                ->setCellValue('A'.(string)($i+2), $order['order']->getBelongsTo()->getUsername())
+                ->setCellValue('B'.(string)($i+2), $order['sumPriceTotal']);
+            }
+           
+            
+            
+          
+            
+            $writer = new Xlsx($spreadsheet);
+            // Redirect output to a client’s web browser (Xlsx)
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="'.$filename.'"');
+            header('Cache-Control: max-age=0');
+            // If you're serving to IE 9, then the following may be needed
+            header('Cache-Control: max-age=1');
+            
+            // If you're serving to IE over SSL, then the following may be needed
+            header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+            header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+            header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+            header('Pragma: public'); // HTTP/1.0
+            $writer->save('php://output');
+        }
         
         $orders = $this->paginator->paginate(
             // Doctrine Query, not results
@@ -158,7 +211,9 @@ class OrderController extends AbstractController
             'orders' => $orders,  
             'searchForm'=>$searchForm->createView(),            
             'currentMonthUrl'=>$currentMonthUrl,
-            'currentYearUrl'=>$currentYearUrl
+            'currentYearUrl'=>$currentYearUrl,
+            'lastMonthUrl'=> $lastMonthUrl,
+            'lastYearUrl' => $lastYearUrl
         ]);
     }
     
