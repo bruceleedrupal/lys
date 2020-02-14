@@ -335,7 +335,31 @@ class OrderController extends AbstractController
      */
     public function show(Order $order): Response
     {
-        return $this->render('order/show2.html.twig', [
+        
+        return $this->render('order/show.html.twig', [
+            'order' => $order,
+        ]);
+    }
+    
+    
+    /**
+     * @Route("/{id}/clone-confirm", name="order_clone_confirm", methods={"GET"})
+     */
+    public function clone_confirm(Order $order): Response
+    {
+        
+        return $this->render('order/clone_confirm.html.twig', [
+            'order' => $order,
+        ]);
+    }
+    
+    /**
+     * @Route("/{id}", name="order_clone", methods={"GET"})
+     */
+    public function clone(Order $order): Response
+    {
+        
+        return $this->render('order/show.html.twig', [
             'order' => $order,
         ]);
     }
@@ -345,7 +369,7 @@ class OrderController extends AbstractController
      */
     public function showpdf(Order $order): Response
     {
-        return $this->render('order/show2.html.twig', [
+        return $this->render('order/show.html.twig', [
             'order' => $order,
         ]);
     }

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}确定复制{{ order.getId() }}号工单?{% endblock %}
+
+
+
+
+{% block body %}
+<div class='card card-info'>
+   
+    <div class="card-body">
+       <h4 class='mb-3 card-title'>确定复制{{ order.getId() }}号工单?</h4>
+    </div>
+    
+    <div class="card-footer">
+        <a href="{{ path('order_clone',{id:order.id}) }}" class='btn btn-info mr-2'>是</a>
+        <button  class='btn btn-info mr-2 float-right' onclick="javascript:console.log('back');window.history.back();">否</button>
+    </div>
+</div>
+{% endblock %}
