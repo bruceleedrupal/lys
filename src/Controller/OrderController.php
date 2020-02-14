@@ -97,6 +97,7 @@ class OrderController extends AbstractController
      */
     public function orderGdtj(Request $request,string $_format): Response
     {   
+       
         
         $firstDayOfMonth = date('Y-m-01', strtotime(date("Y-m-d")));
         $lastDayofMonth = date('Y-m-d', strtotime("$firstDayOfMonth +1 month -1 day"));
@@ -123,6 +124,7 @@ class OrderController extends AbstractController
            $searchForm->get('order_end')->setData(\DateTime::createFromFormat('Y-m-d', $lastDayofMonth));
         }
         $qb = $this->orderRepository->createQueryBuilder('o');
+        $qb->select('sum(o.priceTotal) as sumPriceTotal,o as order,YEAR(o.created) as oyear,MONTH(o.created) as omonth');  
         
         $searchForm->handleRequest($request);
         
@@ -138,14 +140,18 @@ class OrderController extends AbstractController
         if($order_user = $searchForm->get('user')->getData()){
             $qb->andWhere('o.belongsTo=:user')
             ->setParameter('user', $order_user);
+            $qb->groupBy('oyear,omonth');
+            $qb->orderBy('oyear','desc');
+            $qb->addOrderBy('omonth','desc');            
         }
-      
+        else {
+            $qb->groupBy('o.belongsTo');
+            $qb->orderBy('sumPriceTotal','desc');
+        }
         
        
-        $qb->andWhere('o.belongsTo is not null');
-        $qb->select('sum(o.priceTotal) as sumPriceTotal,o as order');
-        $qb->groupBy('o.belongsTo');
-        $qb->orderBy('sumPriceTotal','desc');
+        $qb->andWhere('o.belongsTo is not null');              
+        
         
         
         
@@ -153,27 +159,39 @@ class OrderController extends AbstractController
        
         if($_format=='xls'){
             $filename= 'gdtj'.($order_start ? $order_start->format('Ymd'):'').($order_end ? '-'.$order_end->format('Ymd'):'').".xlsx";
-           
-            
-            
             $spreadsheet = new Spreadsheet();
             $sheet = $spreadsheet->getActiveSheet();
-            
-            
-            $sheet
-            ->setCellValue('A1', '用户')
-            ->setCellValue('B1', '合计');
-            
-            
             $orders = $qb->getQuery()->getResult();
             
             
-            foreach($orders as $i=>$order){
+            if(!$order_user) {
                 $sheet
-                ->setCellValue('A'.(string)($i+2), $order['order']->getBelongsTo()->getUsername())
-                ->setCellValue('B'.(string)($i+2), $order['sumPriceTotal']);
+                ->setCellValue('A1', '员工')
+                ->setCellValue('B1', '合计');
+                
+                foreach($orders as $i=>$order){
+                    $sheet
+                    ->setCellValue('A'.(string)($i+2), $order['order']->getBelongsTo()->getUsername())
+                    ->setCellValue('B'.(string)($i+2), $order['sumPriceTotal']);
+                }
             }
            
+            else {
+                $sheet
+                ->setCellValue('A1', '时间')
+                ->setCellValue('B1', '员工')
+                ->setCellValue('C1', '合计');
+                
+                $sumTotal=0 ;
+                foreach($orders as $i=>$order){
+                    $sumTotal += $order['sumPriceTotal'];
+                    $sheet
+                    ->setCellValue('A'.(string)($i+2), $order['oyear'].'/'.$order['omonth'])
+                    ->setCellValue('B'.(string)($i+2), $order['order']->getBelongsTo()->getUsername())
+                    ->setCellValue('C'.(string)($i+2), $order['sumPriceTotal']);
+                }
+                $sheet->setCellValue('C'.(string)($i+3), $sumTotal);               
+            }
             
             
           
@@ -192,7 +210,11 @@ class OrderController extends AbstractController
             header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
             header('Pragma: public'); // HTTP/1.0
             $writer->save('php://output');
+            exit;
         }
+        
+        
+        
         
         $orders = $this->paginator->paginate(
             // Doctrine Query, not results
@@ -206,15 +228,31 @@ class OrderController extends AbstractController
             ]
         );
         
+        if(!$order_user) {
+            return $this->render('order/list/gdtj.html.twig', [
+                'orders' => $orders,
+                'searchForm'=>$searchForm->createView(),
+                'currentMonthUrl'=>$currentMonthUrl,
+                'currentYearUrl'=>$currentYearUrl,
+                'lastMonthUrl'=> $lastMonthUrl,
+                'lastYearUrl' => $lastYearUrl,                
+            ]);
+        }
+        else {
+            return $this->render('order/list/gdtj_user.html.twig', [
+                'orders' => $orders,
+                'searchForm'=>$searchForm->createView(),
+                'currentMonthUrl'=>$currentMonthUrl,
+                'currentYearUrl'=>$currentYearUrl,
+                'lastMonthUrl'=> $lastMonthUrl,
+                'lastYearUrl' => $lastYearUrl,
+                'order_user'=> $order_user
+            ]);
+        }
         
-        return $this->render('order/list/gdtj.html.twig', [
-            'orders' => $orders,  
-            'searchForm'=>$searchForm->createView(),            
-            'currentMonthUrl'=>$currentMonthUrl,
-            'currentYearUrl'=>$currentYearUrl,
-            'lastMonthUrl'=> $lastMonthUrl,
-            'lastYearUrl' => $lastYearUrl
-        ]);
+        
+        
+        
     }
     
     
