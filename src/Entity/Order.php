@@ -72,6 +72,19 @@ class Order
     {
         $this->orderItem = new ArrayCollection();
     }
+    
+    public function __clone() {
+        $this->setCreated(NULL);
+        
+        $cloneOrderItem  = new ArrayCollection();     
+        foreach ($this->orderItem as $orderItem) {   
+            $cloneItem =clone $orderItem;     
+            $cloneItem->setItemOrder($this);      
+            $cloneOrderItem->add($cloneItem);
+        }
+        $this->orderItem = $cloneOrderItem;
+         
+    }
 
     public function getId(): ?int
     {
@@ -173,7 +186,7 @@ class Order
         return $this->created;;
     }
     
-    public function setCreated(\datetime $created) {
+    public function setCreated(?\datetime $created) {
         $this->created = $created;
         return $this;
     }

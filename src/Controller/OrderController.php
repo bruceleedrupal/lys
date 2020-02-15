@@ -71,7 +71,7 @@ class OrderController extends AbstractController
             }
         }
         
-        
+        $qb->orderBy('o.id','desc');
         
         $orders = $this->paginator->paginate(
             // Doctrine Query, not results
@@ -354,14 +354,18 @@ class OrderController extends AbstractController
     }
     
     /**
-     * @Route("/{id}", name="order_clone", methods={"GET"})
+     * @Route("/{id}/clone", name="order_clone", methods={"GET"})
      */
     public function clone(Order $order): Response
     {
+        $newOrder = clone $order;
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($newOrder);
+        $em->flush();
         
-        return $this->render('order/show.html.twig', [
-            'order' => $order,
-        ]);
+        $this->orderSessionStorage->set($newOrder->getId());
+        return $this->redirectToRoute('cart');
+        
     }
     
     /**
