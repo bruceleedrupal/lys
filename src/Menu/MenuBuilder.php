@@ -62,15 +62,7 @@ class MenuBuilder
         
         
         
-        $menu['gdlb']->addChild('order_gdtj', [
-            'route' => 'order_gdtj',            
-            'label' => "<i class='nav-icon fa fa-circle nav-icon'></i>工单统计",
-            'linkAttributes'=>['class'=>'nav-link'],
-            'attributes'=>[
-                'class'=>'nav-item',
-            ],
-            'extras' => array('safe_label' => true),
-        ]);
+        
         
         $menu['gdlb']->addChild('wdgd', [
             'route' => 'order_indexCreatedBy',
@@ -121,6 +113,44 @@ class MenuBuilder
         ]);
         }
         
+        
+        if($isLoggedin) {
+            $menu->addChild('tjxx',[
+                'uri'=>'#',
+                'label' => "<i class='nav-icon fa fa-list-alt'></i>统计信息",
+                'linkAttributes'=>['class'=>'nav-link'],
+                'childrenAttributes'=>[
+                    'class'=>'nav nav-treeview',
+                ],
+                'attributes'=>[
+                    'class'=>'nav-item has-treeview',
+                ],
+                'extras' => array('safe_label' => true),
+            ]);
+            if($isAdmin) {
+                $menu['tjxx']->addChild('order_gdtj_user', [
+                    'route' => 'order_gdtj_user',
+                    'label' => "<i class='nav-icon fa fa-circle nav-icon'></i>根据用户",
+                    'linkAttributes'=>['class'=>'nav-link'],
+                    'attributes'=>[
+                        'class'=>'nav-item',
+                    ],
+                    'extras' => array('safe_label' => true),
+                ]);
+                
+                $menu['tjxx']->addChild('order_gdtj_product', [
+                    'route' => 'order_gdtj_product',
+                    'label' => "<i class='nav-icon fa fa-circle nav-icon'></i>根据产品",
+                    'linkAttributes'=>['class'=>'nav-link'],
+                    'attributes'=>[
+                        'class'=>'nav-item',
+                    ],
+                    'extras' => array('safe_label' => true),
+                ]);
+            }
+            
+            
+        }
         
         return $menu;
     }

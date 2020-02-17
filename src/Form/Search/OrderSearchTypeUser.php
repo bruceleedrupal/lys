@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
-class OrderSearchType extends AbstractType
+class OrderSearchTypeUser extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

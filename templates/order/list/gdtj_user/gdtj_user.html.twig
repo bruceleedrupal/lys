@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}工单统计:{{order_user.username }}{% endblock %}
+{% block title %}用户工单统计:{{order_user.username }}{% endblock %}
 
 
 
@@ -8,7 +8,7 @@
     <div class="container-fluid">
         <div class="row">
           <div class="col-sm-12">
-            <h4>工单统计:{{order_user.username }}</h4>
+            <h4>用户工单统计:{{order_user.username }}</h4>
           </div>
         </div>
  </div>
@@ -19,7 +19,7 @@
    {{ form_widget(searchForm.order_start) }}-{{ form_widget(searchForm.order_end) }}
    &nbsp;{{ form_widget(searchForm.user) }}&nbsp;
    &nbsp;{{ form_widget(searchForm.submit) }}
-   <a href="{{ path('order_gdtj',{'order_start':'','order_end':''}) }}" class='btn btn-info ml-5'>全部</a>
+   <a href="{{ path('order_gdtj_user',{'order_start':'','order_end':''}) }}" class='btn btn-info ml-5'>全部</a>
    &nbsp;<a href="{{ lastMonthUrl  }}"  class='btn btn-info'>上月</a>
    &nbsp;<a href="{{ currentMonthUrl  }}"  class='btn btn-info'>本月</a>
    &nbsp;<a href="{{ lastYearUrl  }}"  class='btn btn-info'>去年</a>
@@ -58,7 +58,7 @@
         </tbody>
     </table>
     
-    <a href="{{ path('order_gdtj',{'order_start':app.request.query.get('order_start'),'order_end':app.request.query.get('order_end'),'user':app.request.query.get('user'),'_format':'xls'}) }}" class='btn btn-info'><i class="fa fa-file mr-2"></i>导出</a>
+    <a href="{{ path('order_gdtj_user',{'order_start':app.request.query.get('order_start'),'order_end':app.request.query.get('order_end'),'user':app.request.query.get('user'),'_format':'xls'}) }}" class='btn btn-info'><i class="fa fa-file mr-2"></i>导出</a>
  
    
     <div class="navigation">
