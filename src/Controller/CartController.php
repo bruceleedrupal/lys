@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\OrderSessionStorage;
 
 /**
  * @Route("/cart")
@@ -30,14 +31,17 @@ class CartController extends AbstractController
     private $translator;
     
     private $orderFactory;
+    
+    private $orderSessionStorage;
 
 
 
 
-    public function __construct(TranslatorInterface  $translator, OrderFactory $orderFactory)
+    public function __construct(TranslatorInterface  $translator, OrderFactory $orderFactory,OrderSessionStorage $orderSessionStorage)
     {
         $this->translator = $translator;       
         $this->orderFactory = $orderFactory;
+        $this->orderSessionStorage = $orderSessionStorage;
     }
     
     
@@ -138,7 +142,14 @@ class CartController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->orderFactory->clear();
+            if($form->get('submit')->isClicked()){
+                $this->orderFactory->clear();
+            }
+            else if($form->get('finish')->isClicked()){
+                $this->orderSessionStorage->set(NULL);
+            }
+              
+          
          //   $this->addFlash('success', $this->translator->trans('app.cart.clear.message.success'));
         }
         

@@ -67,6 +67,8 @@ app:
             message:
                 success: 产品 %title% 已删除
                 failed: There was a problem with removing the product from the cart
+        finish:
+            button: 完成工单
         clear:
             button: 清空工单
             message:
