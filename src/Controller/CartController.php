@@ -18,9 +18,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\OrderSessionStorage;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/cart")
+ * @IsGranted({"ROLE_ADMIN"})
  */
 
 class CartController extends AbstractController

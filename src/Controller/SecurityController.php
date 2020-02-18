@@ -11,9 +11,18 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Security;
+
 
 class SecurityController extends AbstractController
 {
+    
+    private  $security;
+    
+    public function __construct(Security $security) {
+        $this->security = $security;
+    }
+    
     /**
      * @Route("/register", name="app_register")
      */
@@ -58,8 +67,9 @@ class SecurityController extends AbstractController
     {
         
         $usr= $this->getUser();
+       
         if($usr) {
-            return $this->redirectToRoute('product_index');
+            return $this->redirectToRoute('order_indexbelongsTo');
         }
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -71,7 +81,18 @@ class SecurityController extends AbstractController
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
     
-
+  
+    /**
+     * @Route("/security_target_path", name="security_target_path")
+     */
+    public function security_target_path(): Response
+    {  if($this->security->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('product_index');
+        }
+        else 
+            return $this->redirectToRoute('order_indexbelongsTo');
+        
+    }
     
     
     /**

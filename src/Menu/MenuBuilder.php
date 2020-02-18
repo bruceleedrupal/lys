@@ -91,7 +91,7 @@ class MenuBuilder
        
         
         
-        if($isLoggedin) {
+        if($isAdmin) {
             $menu->addChild('tjxx',[
                 'uri'=>'#',
                 'label' => "<i class='nav-icon fa fa-list-alt'></i>统计信息",
