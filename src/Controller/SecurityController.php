@@ -42,6 +42,7 @@ class SecurityController extends AbstractController
 
         return $this->render('security/register.html.twig', [
             'registrationForm' => $form->createView(),
+            'error'=>$form->getErrors(),
         ]);
     }
     /**
@@ -65,37 +66,8 @@ class SecurityController extends AbstractController
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
     
-    /**
-     * @Route("/forgetpassword", name="app_forgetpassword")
-     */
-    public function forgetpassword(AuthenticationUtils $authenticationUtils): Response
-    {
-        $usr= $this->getUser();
-        
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
-        
-        return $this->render('security/forgetpassword.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
-    }
+
     
-    /**
-     * @Route("/tellogin", name="tel_login")
-     */
-    public function tellogin(AuthenticationUtils $authenticationUtils): Response
-    {
-        $usr= $this->getUser();
-        if($usr) {
-            return $this->redirectToRoute('dashboard');
-        }
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
-        
-        return $this->render('security/tellogin.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
-    }
     
     /**
      * @Route("/logout", name="app_logout")

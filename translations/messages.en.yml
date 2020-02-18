@@ -82,3 +82,7 @@ app:
             message:
                 success: Discount code has been used
                 codeNotFound: Discount code is invalid
+Your password has been updated:
+    '您的密码已更新'
+You password is not correct:
+    '您输出的原始密码不正确'

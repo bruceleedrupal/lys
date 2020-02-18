@@ -496,32 +496,9 @@ class OrderController extends AbstractController
         ]);
     }
 
+    
     /**
-     * @Route("/new", name="order_new", methods={"GET","POST"})
-     * @IsGranted({"ROLE_ADMIN"})
-     */
-    public function new(Request $request): Response
-    {
-        $order = new Order();
-        $form = $this->createForm(OrderType::class, $order);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($order);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('order_index');
-        }
-
-        return $this->render('order/new.html.twig', [
-            'order' => $order,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="order_show", methods={"GET"})
+     * @Route("/{id}", name="order_show", methods={"GET"})    
      */
     public function show(Order $order): Response
     {
@@ -534,6 +511,7 @@ class OrderController extends AbstractController
     
     /**
      * @Route("/{id}/clone-confirm", name="order_clone_confirm", methods={"GET"})
+     * @IsGranted({"ROLE_USER"})
      */
     public function clone_confirm(Order $order): Response
     {
@@ -545,6 +523,7 @@ class OrderController extends AbstractController
     
     /**
      * @Route("/{id}/clone", name="order_clone", methods={"GET"})
+     * @IsGranted({"ROLE_USER"})
      */
     public function clone(Order $order): Response
     {
@@ -558,15 +537,7 @@ class OrderController extends AbstractController
         
     }
     
-    /**
-     * @Route("/{id}/pdf", name="order_show_pdf", methods={"GET"})
-     */
-    public function showpdf(Order $order): Response
-    {
-        return $this->render('order/show.html.twig', [
-            'order' => $order,
-        ]);
-    }
+  
 
     /**
      * @Route("/{id}/edit", name="order_edit", methods={"GET","POST"})
@@ -599,17 +570,5 @@ class OrderController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="order_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, Order $order): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$order->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($order);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('order_index');
-    }
+  
 }

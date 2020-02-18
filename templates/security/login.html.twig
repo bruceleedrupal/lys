@@ -5,25 +5,40 @@
 {% block body %}
 <div class='col-xs-12 col-sm-6 offset-sm-3'>
 <div class="login loginnormal">
-<form method="post" class='form-signin'>
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-    {{ include('security/loginurl.html.twig') }}
-    <label for="inputEmail" class="sr-only">Email/Tel</label>
-    <input value="{{ last_username }}" name="_username" id="inputUnamel" class="form-control"  required autofocus placeholder="输入用户名" >
-    <label for="inputPasswordForm" class="sr-only">Password</label>
-    <input type="password" name="_password" id="inputPasswordForm" class="form-control" placeholder="输入密码" required>
-
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" >
-
-    <div class="links"><a href="{{ path('app_register') }}">注册帐号</a><a href="{{ path('app_forgetpassword') }}">忘记密码</a></div>
-	
-    <button class="btn btn-lg btn-primary btn-block" type="submit">
-       登录
-    </button>
-</form>
-
+<div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title">登录</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form class="form-horizontal"  method="post">
+                <div class="card-body">
+                  {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                  {% endif %}
+                 
+                  <div class="form-group row">
+                    <label for=""inputUname"" class="col-sm-2 col-form-label">用户名</label>
+                    <div class="col-sm-10">
+                      <input value="{{ last_username }}" name="_username" id="inputUname" class="form-control"  required autofocus placeholder="输入用户名" >
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">密码</label>
+                    <div class="col-sm-10">
+                      <input type="password" name="_password" id="inputPassword" class="form-control" placeholder="输入密码" required>
+      </div>
+                  </div>
+                </div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" >
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-info">登录</button>
+                  <a href="{{ path('app_register') }}" class='btn btn-info float-right'>注册帐号</a>
+                </div>
+                <!-- /.card-footer -->
+              </form>
+ </div>
 
 
 

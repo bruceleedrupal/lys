@@ -16,7 +16,8 @@ db:
         price: 单价
         priceTotal: 小计
         create: 增加新工序
-
+There is already an account with this username:
+    '已有帐户'
 app:
     head:
         title: Cart

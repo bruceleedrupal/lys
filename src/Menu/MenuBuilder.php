@@ -88,30 +88,7 @@ class MenuBuilder
         }
         
         
-        if($isAdmin) {
-        $menu->addChild('yhgl',[
-            'uri'=>'#',
-            'label' => "<i class='nav-icon fa fa-user'></i>用户管理 ",
-            'linkAttributes'=>['class'=>'nav-link'],
-            'childrenAttributes'=>[
-                'class'=>'nav nav-treeview',
-            ],
-            'attributes'=>[
-                'class'=>'nav-item has-treeview',
-            ],
-            'extras' => array('safe_label' => true),
-        ]);
-        
-        $menu['yhgl']->addChild('yhlb', [
-            'route' => 'user_index',
-            'label' => "<i class='nav-icon fa fa-circle nav-icon'></i>用户列表",
-            'linkAttributes'=>['class'=>'nav-link'],
-            'attributes'=>[
-                'class'=>'nav-item',
-            ],
-            'extras' => array('safe_label' => true),
-        ]);
-        }
+       
         
         
         if($isLoggedin) {
@@ -150,6 +127,32 @@ class MenuBuilder
             }
             
             
+        }
+        
+        
+        if($isAdmin) {
+            $menu->addChild('yhgl',[
+                'uri'=>'#',
+                'label' => "<i class='nav-icon fa fa-user'></i>用户管理 ",
+                'linkAttributes'=>['class'=>'nav-link'],
+                'childrenAttributes'=>[
+                    'class'=>'nav nav-treeview',
+                ],
+                'attributes'=>[
+                    'class'=>'nav-item has-treeview',
+                ],
+                'extras' => array('safe_label' => true),
+            ]);
+            
+            $menu['yhgl']->addChild('yhlb', [
+                'route' => 'user_index',
+                'label' => "<i class='nav-icon fa fa-circle nav-icon'></i>用户列表",
+                'linkAttributes'=>['class'=>'nav-link'],
+                'attributes'=>[
+                    'class'=>'nav-item',
+                ],
+                'extras' => array('safe_label' => true),
+            ]);
         }
         
         return $menu;

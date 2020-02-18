@@ -1,5 +1,0 @@
-{% set route = app.request.attributes.get('_route') %}
-<ul class="nav nav-tabs menu">
-<li  class="{{ route == 'app_login' ? 'active' }}"><a href="{{ path('app_login') }}">帐号登录</a></li>
-<li  class="{{ route == 'tel_login' ? 'active' }}"><a href="{{ path('tel_login') }}">手机验证快速登录</a></li>
-</ul>
