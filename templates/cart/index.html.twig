@@ -5,17 +5,21 @@
 <div class="content-header">
 <div class="container-fluid">
          <div class="row">                
-                    <div class="col-6">
+                    <div class="col-12">
                         <h4>{{ 'app.cart.title'|trans({'%title%':order.id}) }}</h4>
                     </div>
-                    <div class="col-6 text-right">
-                        {{ form_start(clearForm) }}
-                        {{ form_widget(clearForm.submit) }}
-                        {{ form_widget(clearForm.clone) }} 
-                        {{ form_widget(clearForm.finish) }}
-                        {{ form_end(clearForm) }}                          
-                    </div>
-        </div>    
+                    
+        </div>   
+        <div class='row'>
+        <div class="col-12 text-right">
+        {{ form_start(clearForm) }}
+        {{ form_widget(clearForm.submit) }}
+        {{ form_widget(clearForm.clone) }} 
+        <a href="{{ path('order_export',{id:order.id}) }}" class="btn-success btn"><i class="fa fa-file mr-2"></i>导出</a>
+         {{ form_widget(clearForm.finish) }}
+        {{ form_end(clearForm) }}
+        </div>
+        </div> 
 </div>
 </div>
 {% endblock %}

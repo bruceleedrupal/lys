@@ -560,7 +560,7 @@ class OrderController extends AbstractController
         $sheet->setCellValue('D'.(string)($i+5), $order->getCreated()->format('Y-m-d'));
         
         
-        $fileName = '报价单'.$order->getCreated()->format('Y-m-d').".xlsx";
+        $fileName = '报价单'.$order->getCreated()->format('Y-m-d-H-i').".xlsx";
         $writer = new Xlsx($spreadsheet);
         // Redirect output to a client’s web browser (Xlsx)
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
