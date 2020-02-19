@@ -34,7 +34,7 @@ class MenuBuilder
         if($isLoggedin) {
         $menu->addChild('gdlb',[
             'uri'=>'#',
-            'label' => "<i class='nav-icon fa fa-list-alt'></i>工单 ",
+            'label' => "<i class='nav-icon fa fa-list-alt'></i>订单 ",
             'linkAttributes'=>['class'=>'nav-link'],
             'childrenAttributes'=>[
                 'class'=>'nav nav-treeview',               
@@ -50,7 +50,7 @@ class MenuBuilder
         if($isAdmin) {
         $menu['gdlb']->addChild('sygd', [
             'route' => 'order_indexAll' ,
-            'label' => "<i class='nav-icon fa fa-circle nav-icon'></i>工单详情",
+            'label' => "<i class='nav-icon fa fa-circle nav-icon'></i>订单详情",
             'linkAttributes'=>['class'=>'nav-link'],
             'attributes'=>[
                 'class'=>'nav-item',
@@ -66,7 +66,7 @@ class MenuBuilder
         
         $menu['gdlb']->addChild('wdgd', [
             'route' => 'order_indexCreatedBy',
-             'label' => "<i class='nav-icon fa fa-circle nav-icon'></i>我创建的工单",
+             'label' => "<i class='nav-icon fa fa-circle nav-icon'></i>我创建的订单",
             'linkAttributes'=>['class'=>'nav-link'],
             'attributes'=>[
                 'class'=>'nav-item',
@@ -78,7 +78,7 @@ class MenuBuilder
         if($isLoggedin) {
         $menu['gdlb']->addChild('fpgwgd', [
             'route' => 'order_indexbelongsTo',
-            'label' => "<i class='nav-icon fa fa-circle nav-icon'></i>我的工单",
+            'label' => "<i class='nav-icon fa fa-circle nav-icon'></i>我的订单",
             'linkAttributes'=>['class'=>'nav-link'],
             'attributes'=>[
                 'class'=>'nav-item',

@@ -1,0 +1,7 @@
+{{ form_start(form,{name:form.vars.name~'_'~form.vars.value.id}) }}
+
+{{ form_widget(form.ratio,{id: form.ratio.vars.id~'_'~form.vars.value.id }) }}
+
+
+{{ form_widget(form._token,{id: form._token.vars.id~'_'~form.vars.value.id }) }}
+{{ form_end(form) }}

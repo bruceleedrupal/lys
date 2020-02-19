@@ -11,6 +11,7 @@ use App\Form\ClearCartType;
 use App\Form\RemoveItemType;
 use App\Form\SelectBelongsToFormType;
 use App\Form\SetItemQuantityType;
+use App\Form\SetItemRatioType;
 use App\Form\ChangeCreatedFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -83,6 +84,16 @@ class CartController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+    
+    public function setItemRatioForm(OrderItem $item): Response
+    {
+        $form = $this->createForm(SetItemRatioType::class, $item);
+        
+        return $this->render('cart/_setItemRatio_form.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+    
     
     public function removeItemForm(OrderItem $item): Response
     {
@@ -173,6 +184,22 @@ class CartController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->orderFactory->setItemQuantity($item, $form->getData()->getQuantity());
             $this->addFlash('warning', $this->translator->trans('app.cart.setItemQuantity.message.success',['%title%'=>$item->getProduct()->getTitle(),'%quantity%'=>$item->getQuantity()]));
+        }
+        
+        return $this->redirectToRoute('cart');
+    }
+    
+    /**
+     * @Route("/setItemRation/{id}", name="cart.setItemRatio", methods={"POST"})
+     */
+    public function setRatio(Request $request, OrderItem $item): Response
+    {
+        $form = $this->createForm(SetItemRatioType::class, $item);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->orderFactory->setItemRatio($item, $form->getData()->getRatio());
+            $this->addFlash('warning', $this->translator->trans('app.cart.setItemRatio.message.success',['%title%'=>$item->getProduct()->getTitle(),'%ratio%'=>$item->getRatio()]));
         }
         
         return $this->redirectToRoute('cart');

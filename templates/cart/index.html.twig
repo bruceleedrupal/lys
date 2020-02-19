@@ -30,6 +30,7 @@
                         <th>{{ 'app.cart.table.column.product'|trans }}</th>
                         <th>{{ 'db.product.gongshi'|trans }}</th>
                         <th class='item-quantity-column'>{{ 'app.cart.table.column.quantity'|trans }}</th>
+                        <th class='item-quantity-column'>{{ 'app.cart.table.column.ratio'|trans }}</th>
                         <th class='d-none d-sm-table-cell'>{{ 'db.product.priceTotal'|trans }}</th>
                         <th class='text-center'>{{ 'app.default.remove'|trans }}</th>                        
                     </tr>
@@ -42,6 +43,11 @@
                             <td class="text-sm-center item-quantity-column">
                                 {{ render(controller('App\\Controller\\CartController::setItemQuantityForm', {'id' : item.id})) }}
                             </td>
+                            <td class="text-sm-center item-ratio-column">
+                                {{ render(controller('App\\Controller\\CartController::setItemRatioForm', {'id' : item.id})) }}
+                            </td>
+                            
+                            
                             <td  class='d-none d-sm-table-cell'>
                                 {{ item.priceTotal }}
                             </td>
@@ -58,6 +64,8 @@
                         <td>
                             {{ order.itemsTotal}}
                         </td>
+                        <td>
+                        </td>
                          <td colspan='2'>
                             {{ order.priceTotal}}
                         </td>
@@ -65,10 +73,9 @@
                     
                     <tr>
                         <td colspan='1' class='text-left'>{{ form(selectMemberForm) }}</td> 
-                        <td colspan='4' class='text-right changeCreatedForm'>
+                        <td colspan='5' class='text-right changeCreatedForm'>
                           {{ form(changeCreatedForm) }}
-                          
-                          </td>                        
+                        </td>                        
                                                
                     </tr>
                     

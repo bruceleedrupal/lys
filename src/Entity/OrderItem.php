@@ -44,6 +44,11 @@ class OrderItem
      */
     private $priceTotal;
 
+    /**
+     * @ORM\Column(type="decimal", precision=3, scale=2)
+     */
+    private $ratio;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +110,21 @@ class OrderItem
     public function setPriceTotal(float $priceTotal): self
     {
         $this->priceTotal = $priceTotal;
+
+        return $this;
+    }
+
+    public function getRatio(): ?float
+    {
+        return $this->ratio?$this->ratio:1;
+    }
+
+    public function setRatio(?float $ratio): self
+    {
+        if(!$ratio) 
+            $ratio=1;
+       
+        $this->ratio = $ratio;
 
         return $this;
     }

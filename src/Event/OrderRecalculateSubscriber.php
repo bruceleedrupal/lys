@@ -42,10 +42,11 @@ class OrderRecalculateSubscriber implements EventSubscriberInterface
 
         /** @var OrderItemInterface  $item */
         foreach ($entity->getOrderItem() as $item) {
+            
             $itemsTotal += $item->getQuantity();
             $itemsSingle++;            
             $item->setPrice($item->getProduct()->getPrice());
-            $item->setPriceTotal($item->getPrice() * $item->getQuantity());
+            $item->setPriceTotal($item->getPrice() * $item->getQuantity() * $item->getRatio());
             $priceTotal += $item->getPriceTotal();
         }   
 

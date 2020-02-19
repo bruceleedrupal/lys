@@ -67,6 +67,7 @@ class OrderFactory
             $orderItem->setItemOrder($this->order);
             $orderItem->setProduct($product);
             $orderItem->setQuantity($quantity);
+            $orderItem->setRatio(NULL);
             $this->order->addOrderItem($orderItem);
         } else {
             $key = $this->indexOfProduct($product);
@@ -135,6 +136,27 @@ class OrderFactory
             $event = new GenericEvent($this->order);
             $this->eventDispatcher->dispatch(Events::ORDER_UPDATED, $event);
 
+            $this->entityManager->persist($this->order);
+            $this->entityManager->flush();
+        }
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function setItemRatio(OrderItem $item, float $ratio): void
+    {
+        if ($this->order && $this->order->getOrderItem()->contains($item)) {
+            $key = $this->order->getOrderItem()->indexOf($item);
+            
+            $item->setRatio($ratio);
+            
+            $this->order->getOrderItem()->set($key, $item);
+            
+            // Run events
+            $event = new GenericEvent($this->order);
+            $this->eventDispatcher->dispatch(Events::ORDER_UPDATED, $event);
+            
             $this->entityManager->persist($this->order);
             $this->entityManager->flush();
         }
