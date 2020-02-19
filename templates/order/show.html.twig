@@ -41,7 +41,8 @@
                     <tr>
                         <th>{{ 'app.cart.table.column.product'|trans }}</th>     
                         <th>{{ 'db.product.gongshi'|trans }}</th>                
-                        <th>{{ 'app.cart.table.column.quantity'|trans }}</th>                        
+                        <th>{{ 'app.cart.table.column.quantity'|trans }}</th> 
+                        <th>{{ 'app.cart.table.column.ratio'|trans }}</th>                        
                         <th>{{ 'db.product.priceTotal'|trans }}</th>
                     </tr>
                     </thead>
@@ -55,7 +56,9 @@
                             <td>
                                 {{ item.quantity }}
                             </td>
-                            
+                            <td>
+                                {{ item.ratio }}
+                            </td>
                             <td>
                                 {{ item.priceTotal}}
                             </td>
@@ -64,20 +67,20 @@
                   </tbody>
                   <tfoot>
                   <tr>
-                        <td colspan='4'>&nbsp;
+                        <td colspan='5'>&nbsp;
                         </td>
                         </tr>
                         <tr>
                         <th colspan='2' class='text-right'>产品种类</th>
-                        <td colspan='2'>{{ order.itemsSingle}}</td>
+                        <td colspan='3'>{{ order.itemsSingle}}</td>
                         </tr>
                          <tr>
                         <th colspan='2' class='text-right'>产品合计</th>
-                        <td colspan='2'>{{ order.itemsTotal}}</td>
+                        <td colspan='3'>{{ order.itemsTotal}}</td>
                         </tr>
                          <tr>
                         <th colspan='2' class='text-right'>订单总计</th>
-                        <td colspan='2'>{{ order.priceTotal}}</td>
+                        <td colspan='3'>{{ order.priceTotal}}</td>
                         </tr>
                   </tfoot>                  
 </table>
@@ -96,12 +99,9 @@
             </div>
             <div class="row no-print mt-3">
                 <div class="col-12">
-                  <a class="btn btn-info" href="{{ path('order_clone_confirm',{id:order.id}) }}">
-                        <i class="fa fa-copy mr-2"></i> Clone Order
-                  </a>                                   
-                  <button type="button" class="btn btn-info float-right mr-2">
-                    <i class="fa fa-download mr-2"></i> Generate PDF
-                  </button>
+                  {{ include('order/_delete_form.html.twig') }}
+                  <a href="{{ path('order_clone_confirm',{id:order.id}) }}" class="btn-success btn"><i class="fa fa-copy mr-2"></i>复制</a>
+                  <a href="{{ path('order_export',{id:order.id}) }}" class="btn-success btn"><i class="fa fa-file mr-2"></i>导出</a>
                 </div>
               </div>
             <!-- /.invoice -->

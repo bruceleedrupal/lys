@@ -41,6 +41,19 @@ class ClearCartType extends AbstractType
             ]
         );
         $builder->add(
+            'clone',
+            SubmitType::class,
+            [
+                'label' => 'app.cart.clone.button',
+                'attr'=>[
+                    'icon' => 'fa fa-copy',
+                    'class'=>'btn-success',                    
+                ]
+            ]
+            );
+        
+        
+        $builder->add(
             'finish',
             SubmitType::class,
             [

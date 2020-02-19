@@ -158,6 +158,9 @@ class CartController extends AbstractController
             if($form->get('submit')->isClicked()){
                 $this->orderFactory->clear();
             }
+            else if($form->get('clone')->isClicked()){
+               return  $this->redirectToRoute('order_clone',['id'=>$this->orderSessionStorage->get()]);
+            }
             else if($form->get('finish')->isClicked()){
                 $this->orderSessionStorage->set(NULL);
             }

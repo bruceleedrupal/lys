@@ -75,9 +75,11 @@ app:
                 success: 产品 %title% 已删除
                 failed: There was a problem with removing the product from the cart
         finish:
-            button: 完成订单
+            button: 完成
+        clone:
+            button: 复制
         clear:
-            button: 删除订单
+            button: 删除
             message:
                 success: The cart is now empty
                 failed: There was a problem with clearing the cart

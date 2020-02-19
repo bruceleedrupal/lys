@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Form\OrderType;
+use App\Form\ClearCartType;
 use App\Repository\OrderRepository;
 use App\Repository\OrderItemRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -502,9 +503,11 @@ class OrderController extends AbstractController
      */
     public function show(Order $order): Response
     {
+        $clearForm = $this->createForm(ClearCartType::class, $order); 
         
         return $this->render('order/show.html.twig', [
             'order' => $order,
+            'clearForm' => $clearForm->createView(),  
         ]);
     }
     
@@ -520,6 +523,63 @@ class OrderController extends AbstractController
             'order' => $order,
         ]);
     }
+    
+    
+    /**
+     * @Route("/{id}/export", name="order_export", methods={"GET"})
+     * @IsGranted({"ROLE_ADMIN"})
+     */
+    public function order_export(Order $order): Response
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        
+        
+        
+        
+        $sheet
+        ->setCellValue('A1', '产品')
+        ->setCellValue('B1', '单价')
+        ->setCellValue('C1', '数量')
+        ->setCellValue('D1', '小计');
+        
+       
+        
+        foreach($order->getOrderItem() as $i=>$item){
+            $sheet
+            ->setCellValue('A'.(string)($i+2), $item->getProduct()->getTitle())
+            ->setCellValue('B'.(string)($i+2), $item->getPrice()*$item->getRatio())
+            ->setCellValue('C'.(string)($i+2), $item->getQuantity())
+            ->setCellValue('D'.(string)($i+2), $item->getPriceTotal());           
+        }
+        
+        $sheet
+        ->setCellValue('D'.(string)($i+3), $order->getPriceTotal());
+        
+        $sheet->setCellValue('C'.(string)($i+5), $order->getBelongsTo()->getUsername());
+        $sheet->setCellValue('D'.(string)($i+5), $order->getCreated()->format('Y-m-d'));
+        
+        
+        $fileName = '报价单'.$order->getCreated()->format('Y-m-d').".xlsx";
+        $writer = new Xlsx($spreadsheet);
+        // Redirect output to a client’s web browser (Xlsx)
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$fileName.'"');
+        header('Cache-Control: max-age=0');
+        // If you're serving to IE 9, then the following may be needed
+        header('Cache-Control: max-age=1');
+        
+        // If you're serving to IE over SSL, then the following may be needed
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+        header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+        header('Pragma: public'); // HTTP/1.0
+        $writer->save('php://output');
+        exit;
+        
+        
+    }
+    
     
     /**
      * @Route("/{id}/clone", name="order_clone", methods={"GET"})
@@ -568,6 +628,20 @@ class OrderController extends AbstractController
             'currentOrder'=>$currentOrder,
             'form' => $form->createView(),
         ]);
+    }
+    
+    
+    /**
+     * @Route("/{id}", name="order_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, Order $order): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$order->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($order);
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('product_index');
     }
 
   
