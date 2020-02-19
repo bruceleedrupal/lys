@@ -10,18 +10,41 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Knp\Component\Pager\PaginatorInterface;
 /**
  * @Route("/product")
  */
 class ProductController extends AbstractController
 {
+    private $paginator;
+    
+    
+    public function __construct(PaginatorInterface $paginator)
+    {
+       
+        $this->paginator = $paginator;
+      
+    }
+    
     /**
      * @Route("/", name="product_index", methods={"GET"})
      */
-    public function index(ProductRepository $productRepository): Response
+    public function index(ProductRepository $productRepository,Request $request): Response
     {
+        $query= $productRepository->createQueryBuilder('p');
+        
+        $products =$this->paginator->paginate(
+            // Doctrine Query, not results
+            $query,
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            10
+          );
+        
+        
         return $this->render('product/index.html.twig', [
-            'products' => $productRepository->findAll(),
+            'products' => $products,
         ]);
     }
 
