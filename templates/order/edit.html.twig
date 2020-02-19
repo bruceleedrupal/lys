@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}确定要修改{{ order.getId() }}号工单{% endblock %}
+{% block title %}确定要修改{{ order.getId() }}号订单{% endblock %}
 
 
 
 
 {% block body %}
 <div class="callout callout-info">
-    <h4 class='mb-3'>确定要修改{{ order.getId() }}号工单?</h4>
+    <h4 class='mb-3'>确定要修改{{ order.getId() }}号订单?</h4>
     {% if currentOrder.id  %}
-    <p>点击下方<strong class='ml-1 mr-1'>载入修改</strong>按钮将挂起当前{{ currentOrder.id }}号工单,{{ order.id }}号工单会被载入至当前工单</p>
+    <p>点击下方<strong class='ml-1 mr-1'>载入修改</strong>按钮将挂起当前{{ currentOrder.id }}号订单,{{ order.id }}号订单会被载入至当前订单</p>
     {% else  %}
-    <p>点击下方<strong class='ml-1 mr-1'>载入修改</strong>按钮,{{ order.id }}号工单会被载入至当前工单</p>
+    <p>点击下方<strong class='ml-1 mr-1'>载入修改</strong>按钮,{{ order.id }}号订单会被载入至当前订单</p>
     {% endif %}
     <p>
     {{ form_start(form) }}

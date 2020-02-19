@@ -346,7 +346,7 @@ class OrderController extends AbstractController
             
             if(!$item_product) {
                 $sheet
-                ->setCellValue('A1', '工序')
+                ->setCellValue('A1', '产品')
                 ->setCellValue('B1', '数量')
                 ->setCellValue('C1', '合计');
                 
@@ -361,7 +361,7 @@ class OrderController extends AbstractController
             else {
                 $sheet
                 ->setCellValue('A1', '时间')
-                ->setCellValue('B1', '工序')
+                ->setCellValue('B1', '产品')
                 ->setCellValue('C1', '数量')
                 ->setCellValue('D1', '合计');
                 

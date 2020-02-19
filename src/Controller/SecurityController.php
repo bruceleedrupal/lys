@@ -41,7 +41,7 @@ class SecurityController extends AbstractController
                 )
             );
             
-            $user->setRoles(["ROLE_MEMEBER"]);
+            $user->setRoles(["ROLE_CUSTOMER"]);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -83,7 +83,7 @@ class SecurityController extends AbstractController
     
   
     /**
-     * @Route("/security_target_path", name="security_target_path")
+     * @Route("/", name="security_target_path")
      */
     public function security_target_path(): Response
     {  if($this->security->isGranted('ROLE_ADMIN')) {

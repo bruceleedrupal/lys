@@ -15,7 +15,7 @@ db:
         gongshi: 工时
         price: 单价
         priceTotal: 小计
-        create: 增加新工序
+        create: 添加新产品
 There is already an account with this username:
     '已有帐户'
 app:
@@ -23,7 +23,7 @@ app:
         title: Cart
     default:
         cart: Cart
-        gongdan: 工单
+        gongdan: 订单
         summary: Summary
         remove: 删除
         actions: Actions
@@ -36,11 +36,11 @@ app:
                 product: Product
                 price: Price
     cart:
-        title: '%title%号工单结算'
+        title: '%title%号订单结算'
         table:
             column:
                 product: 产品
-                price: Price
+                price: 价格
                 quantity: 数量
                 discountValue: Discount value
                 summaryWithDiscount: Summary price with discount
@@ -56,9 +56,9 @@ app:
                 success: 产品 %title% 已添加
                 failed: There was a problem with adding the product to the cart
         selectBelongsTo:
-            update: 工单已更新至员工%title%
-            updateEmpty: 工单员工关联已删除
-            select: 请选择员工
+            update: 订单已更新至客户%title%
+            updateEmpty: 订单客户关联已删除
+            select: 请选择客户
         changeCreated:
             update: 更新创建时间
             updated: 创建时间已更新至%title%
@@ -69,9 +69,9 @@ app:
                 success: 产品 %title% 已删除
                 failed: There was a problem with removing the product from the cart
         finish:
-            button: 完成工单
+            button: 完成订单
         clear:
-            button: 清空工单
+            button: 清空订单
             message:
                 success: The cart is now empty
                 failed: There was a problem with clearing the cart
@@ -100,4 +100,4 @@ logout: 退出
 ROLE_ADMIN: 管理员
 ROLE_SUPER_ADMIN: 超级管理员
 ROLE_USER: 普通用户
-ROLE_MEMEBER: 员工
+ROLE_CUSTOMER: 客户

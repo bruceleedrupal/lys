@@ -33,7 +33,7 @@ class UserType extends AbstractType
                 'choices'  =>[
                  //   $this->translator->trans('ROLE_SUPER_ADMIN') => 'ROLE_SUPER_ADMIN',
                     $this->translator->trans('ROLE_ADMIN') => 'ROLE_ADMIN',
-                    $this->translator->trans('ROLE_MEMEBER') => 'ROLE_MEMEBER',                 
+                    $this->translator->trans('ROLE_CUSTOMER') => 'ROLE_CUSTOMER',                 
                 ],                
                 'label'=>'角色',
                 'multiple'=>true,

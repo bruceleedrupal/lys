@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.29, for Linux (x86_64)
 --
--- Host: localhost    Database: lyn
+-- Host: localhost    Database: lys
 -- ------------------------------------------------------
 -- Server version	5.7.29-0ubuntu0.18.04.1
 
@@ -132,7 +132,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','[\"ROLE_ADMIN\", \"ROLE_MEMEBER\"]','$argon2i$v=19$m=65536,t=4,p=1$U3FqQ3pFd1I5YkFXR2ZNUg$PN/iblox4M+o8w14MAn6mwNMc8A0+w3CbZ+2EYKjflI','2020-02-18 18:02:48','2019-11-04 00:00:00'),(2,'李跃能','[\"ROLE_MEMEBER\"]','$argon2i$v=19$m=65536,t=4,p=1$a0paQXU4YmVtQmw0VG5NVQ$QFi8cVtXBYrsmaWcKtHBOxylhEbUwS6tXJpSy6VojIk','2019-11-25 16:41:11','2019-11-22 12:57:40'),(3,'李小翠','{\"1\": \"ROLE_MEMEBER\"}','$argon2i$v=19$m=65536,t=4,p=1$LlJEVnU3aUYvRzk2OWVUNg$f4HLZWxMZaJSc5rueU3GKmSJum69CtJl31HvrOZCUqM','2019-11-29 16:52:49','2019-11-29 12:42:57'),(4,'张美仙','[\"ROLE_MEMEBER\"]','$argon2i$v=19$m=65536,t=4,p=1$dDZvTGhUQXAwc09SSlJ4Lg$SDc8KVl1mXf0906mQBwKXpzS19rRJV/3XFtRPKZWL54','2020-02-18 14:38:40','2019-11-29 16:08:14'),(5,'李宇凡','[\"ROLE_MEMEBER\"]','$argon2i$v=19$m=65536,t=4,p=1$RFVvV21HLmV1bzRGcEUzQg$E5j7fa0Gletdo4FtfNJRAIjaXfJ4Fm3LvBr7pq9QvGQ',NULL,'2020-02-18 16:32:36'),(6,'樊巧红','[\"ROLE_MEMEBER\"]','$argon2i$v=19$m=65536,t=4,p=1$RmluWUlIL1RpMWR3N2xaeA$iNMQ0nHTc6KgWeQik4nvgr+2R4Lvd3S8E9bxXJ2SOW0',NULL,'2020-02-18 16:36:06'),(7,'bruce','[\"ROLE_MEMEBER\"]','$argon2i$v=19$m=65536,t=4,p=1$TzF0OTF3N2dubXJlR1ZEbg$JgY4MXxEvmA66L7xMp9NGw/SSButA7WCnDCZw1jR1xw',NULL,'2020-02-18 16:39:09'),(9,'test','[\"ROLE_MEMEBER\"]','$argon2i$v=19$m=65536,t=4,p=1$WXAvbDBVUjlhWVRXQWZlQQ$gx5da5FcefJLrzftpj9jPwWlbWKAuBQe2KpTWEx5/BU','2020-02-18 17:59:10','2020-02-18 16:59:48');
+INSERT INTO `user` VALUES (1,'admin','[\"ROLE_ADMIN\", \"ROLE_CUSTOMER\"]','$argon2i$v=19$m=65536,t=4,p=1$U3FqQ3pFd1I5YkFXR2ZNUg$PN/iblox4M+o8w14MAn6mwNMc8A0+w3CbZ+2EYKjflI','2020-02-19 09:22:42','2019-11-04 00:00:00'),(2,'李跃能','[\"ROLE_CUSTOMER\"]','$argon2i$v=19$m=65536,t=4,p=1$a0paQXU4YmVtQmw0VG5NVQ$QFi8cVtXBYrsmaWcKtHBOxylhEbUwS6tXJpSy6VojIk','2019-11-25 16:41:11','2019-11-22 12:57:40'),(3,'李小翠','{\"1\": \"ROLE_CUSTOMER\"}','$argon2i$v=19$m=65536,t=4,p=1$LlJEVnU3aUYvRzk2OWVUNg$f4HLZWxMZaJSc5rueU3GKmSJum69CtJl31HvrOZCUqM','2019-11-29 16:52:49','2019-11-29 12:42:57'),(4,'张美仙','[\"ROLE_CUSTOMER\"]','$argon2i$v=19$m=65536,t=4,p=1$dDZvTGhUQXAwc09SSlJ4Lg$SDc8KVl1mXf0906mQBwKXpzS19rRJV/3XFtRPKZWL54','2020-02-18 14:38:40','2019-11-29 16:08:14'),(5,'李宇凡','[\"ROLE_CUSTOMER\"]','$argon2i$v=19$m=65536,t=4,p=1$RFVvV21HLmV1bzRGcEUzQg$E5j7fa0Gletdo4FtfNJRAIjaXfJ4Fm3LvBr7pq9QvGQ',NULL,'2020-02-18 16:32:36'),(6,'樊巧红','[\"ROLE_CUSTOMER\"]','$argon2i$v=19$m=65536,t=4,p=1$RmluWUlIL1RpMWR3N2xaeA$iNMQ0nHTc6KgWeQik4nvgr+2R4Lvd3S8E9bxXJ2SOW0',NULL,'2020-02-18 16:36:06'),(7,'bruce','[\"ROLE_CUSTOMER\"]','$argon2i$v=19$m=65536,t=4,p=1$TzF0OTF3N2dubXJlR1ZEbg$JgY4MXxEvmA66L7xMp9NGw/SSButA7WCnDCZw1jR1xw',NULL,'2020-02-18 16:39:09'),(9,'test','[\"ROLE_CUSTOMER\"]','$argon2i$v=19$m=65536,t=4,p=1$WXAvbDBVUjlhWVRXQWZlQQ$gx5da5FcefJLrzftpj9jPwWlbWKAuBQe2KpTWEx5/BU','2020-02-19 09:20:11','2020-02-18 16:59:48');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -145,4 +145,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-19  8:24:12
+-- Dump completed on 2020-02-19  9:27:04

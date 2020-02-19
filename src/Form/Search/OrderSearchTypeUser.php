@@ -34,7 +34,7 @@ class OrderSearchTypeUser extends AbstractType
             'required'=>false,
             'query_builder' => function (EntityRepository $er) {
                return $er->createQueryBuilder('u')->andWhere('u.roles like :role')
-               ->setParameter('role', '%ROLE_MEMEBER%');               
+               ->setParameter('role', '%ROLE_CUSTOMER%');               
             },
             'choice_label'=>'username'])
         ->add('submit',SubmitType::class,[           

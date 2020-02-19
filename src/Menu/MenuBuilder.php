@@ -78,7 +78,7 @@ class MenuBuilder
         if($isLoggedin) {
         $menu['gdlb']->addChild('fpgwgd', [
             'route' => 'order_indexbelongsTo',
-            'label' => "<i class='nav-icon fa fa-circle nav-icon'></i>分配给我的工单",
+            'label' => "<i class='nav-icon fa fa-circle nav-icon'></i>我的工单",
             'linkAttributes'=>['class'=>'nav-link'],
             'attributes'=>[
                 'class'=>'nav-item',

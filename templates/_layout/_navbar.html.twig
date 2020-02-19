@@ -1,14 +1,16 @@
+ 
+ {%  if is_granted('ROLE_ADMIN') %}
  <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
       </li>
      
       <li class="nav-item">
-        <a href="{{ path('product_index') }}" class="nav-link">工序</a>
+        <a href="{{ path('product_index') }}" class="nav-link">产品</a>
       </li>
  </ul>
  
- 
+ {% endif %}
 
 
 
